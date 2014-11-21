@@ -85,7 +85,7 @@ public class UniqueIdentifier : MonoBehaviour
 	public void FullConfigure ()
 	{
 		ConfigureId ();
-		foreach (var c in GetComponentsInChildren<UniqueIdentifier>(true).Where(c=>c.gameObject.active == false)) {
+		foreach (var c in GetComponentsInChildren<UniqueIdentifier>(true).Where(c=>c.gameObject.activeInHierarchy == false)) {
 			c.ConfigureId ();
 		}
 	}

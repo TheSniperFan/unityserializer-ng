@@ -425,7 +425,7 @@ public static class Radical
 		
 	public static void ActivateChildren(this Component co)
 	{
-		co.gameObject.SetActiveRecursively(true);
+		co.gameObject.SetActive(true);
 	}
 
 	
@@ -554,8 +554,8 @@ public static class Radical
 	
 	public static void DeactivateChildren(this Component co)
 	{
-		foreach(var c in co.transform.GetComponentsInChildren<Transform>().Except(new [] {co.transform}))
-			c.gameObject.active = false;
+        foreach (var c in co.transform.GetComponentsInChildren<Transform>().Except(new[] { co.transform }))
+            c.gameObject.SetActive(false);
 	}
 
 	

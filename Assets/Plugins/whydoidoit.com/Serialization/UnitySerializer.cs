@@ -1694,7 +1694,8 @@ namespace Serialization
 						return null;
 					if(_componentHelper == null)
 					{
-						_componentHelper = new GameObject("Component Helper") { hideFlags = HideFlags.HideAndDontSave, active = false };
+						_componentHelper = new GameObject("Component Helper") { hideFlags = HideFlags.HideAndDontSave };
+                        _componentHelper.SetActive(false);
 					}
 					try
 					{

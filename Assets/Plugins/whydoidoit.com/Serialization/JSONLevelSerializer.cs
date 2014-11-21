@@ -897,7 +897,7 @@ public static class JSONLevelSerializer
 	                                        var si = new StoredItem()
 	                                                     {
                                                              createEmptyObject = n.GetComponent<EmptyObjectIdentifier>() != null,
-	                                                         Active = n.active,
+	                                                         Active = n.activeInHierarchy,
 										                     layer = n.layer,
 									                         tag = n.tag,
 									                         setExtraData = true,

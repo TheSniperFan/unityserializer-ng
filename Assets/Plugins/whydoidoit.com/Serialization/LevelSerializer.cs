@@ -939,7 +939,7 @@ public static class LevelSerializer
 									                     layer = n.layer,
 									                     tag = n.tag,
 									                     setExtraData = true,
-                                                         Active = n.active,
+                                                         Active = n.activeInHierarchy,
                                                          Components =
                                                              n.GetComponents<Component>().Where(c=>c!=null).Select(
                                                                  c => c.GetType().FullName).Distinct()

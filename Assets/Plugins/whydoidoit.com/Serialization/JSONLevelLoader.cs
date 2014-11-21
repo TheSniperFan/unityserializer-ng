@@ -132,7 +132,7 @@ public class JSONLevelLoader : MonoBehaviour
 
     private static void SetActive(GameObject go, bool activate)
     {
-        go.active = activate;
+        go.SetActive(activate);
         foreach (var c in go.transform.Cast<Transform>())
         {
             if (c.GetComponent<StoreInformation>() == null)
