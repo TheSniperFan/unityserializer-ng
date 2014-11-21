@@ -249,9 +249,9 @@ public class StoreMaterials : MonoBehaviour
 	}
 	void OnEnable()
 	{
-		if(renderer != null)
+		if(GetComponent<Renderer>() != null)
 		{
-			MaterialProperties =  renderer.sharedMaterials.Where(m=>m).SelectMany(m=>GetShaderProperties(m)).Discrete(m=>m.name).ToList();
+			MaterialProperties =  GetComponent<Renderer>().sharedMaterials.Where(m=>m).SelectMany(m=>GetShaderProperties(m)).Discrete(m=>m.name).ToList();
 		}
 
 	}

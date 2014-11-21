@@ -12,10 +12,10 @@ public class LoadAnimations : MonoBehaviour {
 		var clips = Resources.LoadAll("Animations/" + name, typeof(AnimationClip)).Cast<AnimationClip>();
 		foreach (var c in clips)
 		{
-			animation.AddClip(c, c.name.Contains("@") ? c.name.Substring(c.name.LastIndexOf("@") + 1) : c.name);
+			GetComponent<Animation>().AddClip(c, c.name.Contains("@") ? c.name.Substring(c.name.LastIndexOf("@") + 1) : c.name);
 		}
 
-		foreach (var a in animation.Cast<AnimationState>())
+		foreach (var a in GetComponent<Animation>().Cast<AnimationState>())
 		{
 			a.enabled = true;
 		}

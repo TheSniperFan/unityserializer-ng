@@ -39,7 +39,7 @@ public class StoreMesh : MonoBehaviour {
 		vertices = mesh.vertices;
 		normals = mesh.normals;
 		uv = mesh.uv;
-		uv1 = mesh.uv1;
+		uv1 = mesh.uv2;
 		uv2 = mesh.uv2;
 		colors = mesh.colors;
 		triangles = new int[subMeshCount = mesh.subMeshCount][];
@@ -56,7 +56,7 @@ public class StoreMesh : MonoBehaviour {
 		mesh.vertices = vertices;
 		mesh.normals = normals;
 		mesh.uv  = uv;
-		mesh.uv1 = uv1;
+		mesh.uv2 = uv1;
 		mesh.uv2 = uv2;
 		mesh.colors = colors;
 		mesh.tangents = tangents;

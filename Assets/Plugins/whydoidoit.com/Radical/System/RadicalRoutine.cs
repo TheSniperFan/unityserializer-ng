@@ -138,7 +138,7 @@ public class WaitForAnimation : CoroutineReturn
 				return false;
 			}
 			
-			var anim = _go.animation[_name];
+			var anim = _go.GetComponent<Animation>()[_name];
 		
 			bool ret = true;
 				
@@ -160,7 +160,7 @@ public class WaitForAnimation : CoroutineReturn
 				}
 			
 			}
-			if(!_go.animation.IsPlaying(_name))
+			if(!_go.GetComponent<Animation>().IsPlaying(_name))
 			{
 				ret = true;
 			}

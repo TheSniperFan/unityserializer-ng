@@ -511,12 +511,12 @@ public static class Radical
 	{
 		if(clip==null)
 			return;
-		if(!gameObject.audio)
+		if(!gameObject.GetComponent<AudioSource>())
 		{
 			gameObject.AddComponent<AudioSource>();
-			gameObject.audio.playOnAwake = false;
+			gameObject.GetComponent<AudioSource>().playOnAwake = false;
 		}
-		gameObject.audio.PlayOneShot(clip);
+		gameObject.GetComponent<AudioSource>().PlayOneShot(clip);
 		
 	
 	}
@@ -525,19 +525,19 @@ public static class Radical
 	{
 		if(clip==null)
 			return;
-		if(!gameObject.audio)
+		if(!gameObject.GetComponent<AudioSource>())
 		{
 			gameObject.AddComponent<AudioSource>();
-			gameObject.audio.playOnAwake = false;
+			gameObject.GetComponent<AudioSource>().playOnAwake = false;
 		}
-		gameObject.audio.clip = clip;
-		gameObject.audio.loop = true;
-		gameObject.audio.Play();
+		gameObject.GetComponent<AudioSource>().clip = clip;
+		gameObject.GetComponent<AudioSource>().loop = true;
+		gameObject.GetComponent<AudioSource>().Play();
 	}
 	
 	public static void FadeVolume(this GameObject component, float toLevel = 1, float time = 1f, float? fromLevel = null)
 	{
-		component.gameObject.StartExtendedCoroutine(VolumeFader(component.audio, toLevel, time, fromLevel));
+		component.gameObject.StartExtendedCoroutine(VolumeFader(component.GetComponent<AudioSource>(), toLevel, time, fromLevel));
 	}
 	
 	static IEnumerator VolumeFader(AudioSource source, float level, float time, float? fromLevel)

@@ -16,7 +16,7 @@ public class ClickMeAndDie : MonoBehaviour {
 		if(Input.GetMouseButtonDown(0))
 		{
 			RaycastHit hit;
-			if(collider.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 1000))
+			if(GetComponent<Collider>().Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 1000))
 			{
 				JSONLevelSerializer.SaveObjectTreeToServer("ftp://whydoidoit.net/testspider" + id.ToString() + ".json", gameObject,"testserializer", "T3sts3rializer", (e)=>{
 					if(e==null)

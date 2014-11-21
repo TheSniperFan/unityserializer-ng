@@ -35,7 +35,7 @@ public class PlayerSpawnPoint : MonoBehaviour
 	
 	void Awake()
 	{
-		collider.isTrigger = true;
+		GetComponent<Collider>().isTrigger = true;
 	}
 	
 	void OnTriggerEnter(Collider other)
