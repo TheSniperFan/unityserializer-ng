@@ -16,7 +16,7 @@ public class ColorMe : MonoBehaviourEx {
 	
 	IEnumerator DoColorMe()
 	{
-		var color = renderer.material.color;
+		var color = GetComponent<Renderer>().material.color;
 		var target = Color.blue;
 		while(true)
 		{
@@ -24,14 +24,14 @@ public class ColorMe : MonoBehaviourEx {
 			while(t < 1)
 			{
 				
-				renderer.material.color = Color.Lerp(color, target, t);
+				GetComponent<Renderer>().material.color = Color.Lerp(color, target, t);
 				t += Time.deltaTime/3;
 				yield return null;
 			}
 			t = 0;
 			while(t < 1)
 			{
-				renderer.material.color = Color.Lerp(target, color, t);
+				GetComponent<Renderer>().material.color = Color.Lerp(target, color, t);
 				t += Time.deltaTime/3;
 				yield return null;
 			}

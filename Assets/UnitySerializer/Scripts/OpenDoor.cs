@@ -7,7 +7,7 @@ public class OpenDoor : MonoBehaviour {
 	{
 		if(Input.GetKeyDown(KeyCode.B))
 		{
-			rigidbody.AddForceAtPosition(Vector3.forward * 10, transform.position + new Vector3(0.3f,0,0), ForceMode.Impulse);
+			GetComponent<Rigidbody>().AddForceAtPosition(Vector3.forward * 10, transform.position + new Vector3(0.3f,0,0), ForceMode.Impulse);
 		}
 	}
 }

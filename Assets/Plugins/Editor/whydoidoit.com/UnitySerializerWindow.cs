@@ -457,7 +457,7 @@ public class UnitySerializerWindow : EditorWindow
 						{
 							if(GUILayout.Button("Store Materials"))
 							{
-								foreach (var c in Selection.gameObjects.Where(g=>g.GetComponent<StoreMaterials>()==null && g.renderer != null))
+								foreach (var c in Selection.gameObjects.Where(g=>g.GetComponent<StoreMaterials>()==null && g.GetComponent<Renderer>() != null))
 									c.AddComponent<StoreMaterials>();
 							}
 							GUI.color = new Color (0.9f, 0.5f, 0.5f);

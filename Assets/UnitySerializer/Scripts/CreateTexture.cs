@@ -28,7 +28,7 @@ public class CreateTexture : MonoBehaviour {
 		else
 			texture = referenceTexture;
 		m.mainTexture = texture;
-		renderer.material = m;
+		GetComponent<Renderer>().material = m;
 			
 	
 	}

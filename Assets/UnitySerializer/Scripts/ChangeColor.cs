@@ -21,6 +21,6 @@ public class ChangeColor : MonoBehaviour {
 		 color.r += Random.value/100;
 		 color.g += Random.value/100;
 		 color.b += Random.value/100;
-		 renderer.material.color = color;
+		 GetComponent<Renderer>().material.color = color;
 	}
 }

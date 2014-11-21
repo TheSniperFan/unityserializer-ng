@@ -17,7 +17,7 @@ public class AddSomeForce : MonoBehaviour {
 		if(done) 
 			return;
 		done = true;
-		rigidbody.angularVelocity = Random.insideUnitSphere * 10;
+		GetComponent<Rigidbody>().angularVelocity = Random.insideUnitSphere * 10;
 		
 	}
 	

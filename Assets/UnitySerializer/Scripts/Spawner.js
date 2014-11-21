@@ -39,17 +39,17 @@ function Update () {
 			var go = new GameObject();
 			go.AddComponent(EmptyObjectIdentifier);
 			var body = go.AddComponent(Rigidbody);
-			body.rigidbody.angularVelocity = Vector3(Random.value * 20, Random.value * 20, Random.value * 20);
+			body.GetComponent.<Rigidbody>().angularVelocity = Vector3(Random.value * 20, Random.value * 20, Random.value * 20);
 			go.AddComponent(SphereCollider);
 			if(Random.value < 0.1)
 			{
 				var l = go.AddComponent(Light);
-				l.light.type = LightType.Point;
-				l.light.intensity = 2;
-				l.light.color = Color(Random.value/2 + 0.5,Random.value/2 + 0.5,Random.value/2 + 0.5);
+				l.GetComponent.<Light>().type = LightType.Point;
+				l.GetComponent.<Light>().intensity = 2;
+				l.GetComponent.<Light>().color = Color(Random.value/2 + 0.5,Random.value/2 + 0.5,Random.value/2 + 0.5);
 			}
-			go.AddComponent("SaveAndReload");
-			go.AddComponent("ColorMe");
+			UnityEngineInternal.APIUpdaterRuntimeServices.AddComponent(go, "Assets/UnitySerializer/Scripts/Spawner.js(51,25)", "SaveAndReload");
+			UnityEngineInternal.APIUpdaterRuntimeServices.AddComponent(go, "Assets/UnitySerializer/Scripts/Spawner.js(52,25)", "ColorMe");
 			var mesh = go.AddComponent(MeshFilter);
 			mesh.sharedMesh = createMesh;
 			var renderer = go.AddComponent(MeshRenderer);
