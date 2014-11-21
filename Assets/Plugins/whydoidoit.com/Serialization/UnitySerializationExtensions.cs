@@ -767,7 +767,8 @@ public class RagePixelSupport
 }
 
 [ComponentSerializerFor(typeof(Renderer))]
-[ComponentSerializerFor(typeof(ClothRenderer))]
+// TODO: Reimplement functionality
+//[ComponentSerializerFor(typeof(ClothRenderer))]
 [ComponentSerializerFor(typeof(LineRenderer))]
 [ComponentSerializerFor(typeof(TrailRenderer))]
 [ComponentSerializerFor(typeof(ParticleRenderer))]
