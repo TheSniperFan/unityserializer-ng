@@ -666,7 +666,7 @@ public class SerializeRigidBody : IComponentSerializer
 		public bool useGravity, freezeRotation, detectCollisions, useConeFriction;
 		public Vector3 velocity, position, angularVelocity, centerOfMass, inertiaTensor;
 		public Quaternion rotation, inertiaTensorRotation;
-		public float drag, angularDrag, mass, sleepVelocity, sleepAngularVelocity, maxAngularVelocity;
+        public float drag, angularDrag, mass, sleepThreshold, maxAngularVelocity;
 		public RigidbodyConstraints constraints;
 		public CollisionDetectionMode collisionDetectionMode;
 		public RigidbodyInterpolation interpolation;
@@ -691,8 +691,7 @@ public class SerializeRigidBody : IComponentSerializer
 			drag = source.drag;
 			angularDrag = source.angularDrag;
 			mass = source.mass;
-			sleepVelocity = source.sleepVelocity;
-			sleepAngularVelocity = source.sleepAngularVelocity;
+			sleepThreshold = source.sleepThreshold;
 			maxAngularVelocity = source.maxAngularVelocity;
 			constraints = source.constraints;
 			collisionDetectionMode = source.collisionDetectionMode;
@@ -714,8 +713,7 @@ public class SerializeRigidBody : IComponentSerializer
 			body.mass = mass;
             if(!rotation.Equals(zero))
 			    body.rotation = rotation;
-			body.sleepVelocity = sleepVelocity;
-			body.sleepAngularVelocity = sleepAngularVelocity;
+			body.sleepThreshold = sleepThreshold;
 			body.maxAngularVelocity= maxAngularVelocity;
 			body.constraints = constraints;
 			body.collisionDetectionMode = collisionDetectionMode;
