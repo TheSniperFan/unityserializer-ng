@@ -712,7 +712,8 @@ public class SerializeRigidBody : IComponentSerializer
 			body.drag = drag;
 			body.angularDrag = angularDrag;
 			body.mass = mass;
-			body.rotation = rotation;
+            if(!rotation.Equals(zero))
+			    body.rotation = rotation;
 			body.sleepVelocity = sleepVelocity;
 			body.sleepAngularVelocity = sleepAngularVelocity;
 			body.maxAngularVelocity= maxAngularVelocity;
@@ -728,7 +729,7 @@ public class SerializeRigidBody : IComponentSerializer
 				body.angularVelocity = angularVelocity;
 				if(inertiaTensor != Vector3.zero)
 					body.inertiaTensor = inertiaTensor;
-				if(inertiaTensorRotation != zero)
+				if(!inertiaTensorRotation.Equals(zero))
 					body.inertiaTensorRotation = inertiaTensorRotation;
 			}
 			
