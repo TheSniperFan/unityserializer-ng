@@ -5,10 +5,12 @@ namespace UnitySerializerNG.FilePreferences {
         private static int instances;
 
         private void Awake() {
-            instances++;
+            if (Application.isPlaying) {
+                instances++;
 
-            if (instances > 1)
-                DestroyObject(gameObject);
+                if (instances > 1)
+                    DestroyObject(gameObject);
+            }
         }
 
         private void OnApplicationQuit() {
