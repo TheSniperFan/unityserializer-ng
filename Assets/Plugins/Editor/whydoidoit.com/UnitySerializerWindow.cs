@@ -504,9 +504,9 @@ public class UnitySerializerWindow : EditorWindow
 					if (EditorUtility.DisplayDialog ("Delete Saved Games", 
 						"Are you sure you want to delete all of the saved games?", "Yes", "No")) {
 						LevelSerializer.SavedGames.Clear ();
-						LevelSerializer.SaveDataToPlayerPrefs (); 
+						LevelSerializer.SaveDataToFilePrefs (); 
 						JSONLevelSerializer.SavedGames.Clear();
-						JSONLevelSerializer.SaveDataToPlayerPrefs();
+						JSONLevelSerializer.SaveDataToFilePrefs();
 					}
 				}
 				if (GameObject.FindObjectsOfType (typeof(SaveGameManager)).Length != 0 && GUILayout.Button ("Capture All Objects")) {
@@ -666,9 +666,9 @@ public class UnitySerializerWindow : EditorWindow
 					if (EditorUtility.DisplayDialog ("Delete Saved Games", 
 						"Are you sure you want to delete all of the saved games?", "Yes", "No")) {
 						LevelSerializer.SavedGames.Clear ();
-						LevelSerializer.SaveDataToPlayerPrefs ();
+						LevelSerializer.SaveDataToFilePrefs ();
 						JSONLevelSerializer.SavedGames.Clear ();
-						JSONLevelSerializer.SaveDataToPlayerPrefs (); 
+						JSONLevelSerializer.SaveDataToFilePrefs (); 
 					}
 				}
 				if (GameObject.FindObjectsOfType (typeof(SaveGameManager)).Length != 0 && GUILayout.Button ("Capture All Objects")) {

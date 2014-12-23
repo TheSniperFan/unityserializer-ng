@@ -11,7 +11,7 @@ public class RemoveEditors : MonoBehaviour
 	void Awake()
 	{
 		LevelSerializer.SavedGames.Clear();
-		LevelSerializer.SaveDataToPlayerPrefs();
+		LevelSerializer.SaveDataToFilePrefs();
 		
 		
 		Component.DestroyImmediate(this);

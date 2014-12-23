@@ -419,7 +419,7 @@ public static class LevelSerializer
 
         try
         {
-            var stored = PlayerPrefs.GetString("_Save_Game_Data_");
+            var stored = FilePrefs.GetString("_Save_Game_Data_");
             if (!string.IsNullOrEmpty(stored))
             {
 				try
@@ -435,7 +435,7 @@ public static class LevelSerializer
             if (SavedGames == null)
             {
                 SavedGames = new Index<string, List<SaveEntry>>();
-				SaveDataToPlayerPrefs();
+				SaveDataToFilePrefs();
             }
         }
         catch
@@ -466,7 +466,7 @@ public static class LevelSerializer
 	/// </value>
     public static bool CanResume
     {
-        get { return !string.IsNullOrEmpty(PlayerPrefs.GetString(PlayerName + "__RESUME__")); }
+        get { return !string.IsNullOrEmpty(FilePrefs.GetString(PlayerName + "__RESUME__")); }
     }
 
     /// <summary>
@@ -532,7 +532,7 @@ public static class LevelSerializer
     /// </summary>
     public static void Resume()
     {
-        var data = PlayerPrefs.GetString(PlayerName + "__RESUME__");
+        var data = FilePrefs.GetString(PlayerName + "__RESUME__");
         if (!string.IsNullOrEmpty(data))
         {
             var se = UnitySerializer.Deserialize<SaveEntry>(Convert.FromBase64String(data));
@@ -551,8 +551,8 @@ public static class LevelSerializer
     private static void PerformSaveCheckPoint(string name, bool urgent)
     {
         var newGame = CreateSaveEntry(name, urgent);
-        PlayerPrefs.SetString(PlayerName + "__RESUME__", Convert.ToBase64String(UnitySerializer.Serialize(newGame)));
-		PlayerPrefs.Save();
+        FilePrefs.SetString(PlayerName + "__RESUME__", Convert.ToBase64String(UnitySerializer.Serialize(newGame)));
+		FilePrefs.Save();
     }
 
     /// <summary>
@@ -568,9 +568,9 @@ public static class LevelSerializer
                 _cachedState = CreateSaveEntry("resume", true);
                 if (SaveResumeInformation)
                 {
-                    PlayerPrefs.SetString(PlayerName + "__RESUME__",
+                    FilePrefs.SetString(PlayerName + "__RESUME__",
                                           Convert.ToBase64String(UnitySerializer.Serialize(_cachedState)));
-					PlayerPrefs.Save();
+					FilePrefs.Save();
                 }
             }
         }
@@ -680,10 +680,10 @@ public static class LevelSerializer
             SavedGames[PlayerName].RemoveAt(SavedGames.Count - 1);
         }
 
-        SaveDataToPlayerPrefs();
+        SaveDataToFilePrefs();
 
-        PlayerPrefs.SetString(PlayerName + "__RESUME__", Convert.ToBase64String(UnitySerializer.Serialize(newGame)));
-		PlayerPrefs.Save();
+        FilePrefs.SetString(PlayerName + "__RESUME__", Convert.ToBase64String(UnitySerializer.Serialize(newGame)));
+		FilePrefs.Save();
         GameSaved();
     }
 
@@ -691,10 +691,10 @@ public static class LevelSerializer
     /// <summary>
     ///   Saves the stored game data to player prefs.
     /// </summary>
-    public static void SaveDataToPlayerPrefs()
+    public static void SaveDataToFilePrefs()
     {
-        PlayerPrefs.SetString("_Save_Game_Data_", Convert.ToBase64String(UnitySerializer.Serialize(SavedGames)));
-		PlayerPrefs.Save();
+        FilePrefs.SetString("_Save_Game_Data_", Convert.ToBase64String(UnitySerializer.Serialize(SavedGames)));
+		FilePrefs.Save();
     }
 
     /// <summary>
@@ -1316,7 +1316,7 @@ public static class LevelSerializer
             if (owner.Value != null)
             {
                 owner.Value.Remove(this);
-                SaveDataToPlayerPrefs();
+                SaveDataToFilePrefs();
             }
         }
 

@@ -135,7 +135,7 @@ Saved games are keyed off player name, so Mike and Tim will see different saved 
 
 You can save a game in a number of ways:
 
-* Call LevelSerializer.SaveGame("GameNameHere"); and a new entry will made for the current player in PlayerPrefs.
+* Call LevelSerializer.SaveGame("GameNameHere"); and a new entry will made for the current player in FilePrefs.
 
 * Call LevelSerializer.Checkpoint(); and a special check point will be added for the current player - this can be resumed with LevelSerializer.Resume();
 

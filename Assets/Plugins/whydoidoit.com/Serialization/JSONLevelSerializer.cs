@@ -142,7 +142,7 @@ public static class JSONLevelSerializer
 
         try
         {
-            var stored = PlayerPrefs.GetString("JSON_Save_Game_Data_");
+            var stored = FilePrefs.GetString("JSON_Save_Game_Data_");
             if (!string.IsNullOrEmpty(stored))
             {
                 SavedGames =
@@ -422,7 +422,7 @@ public static class JSONLevelSerializer
 	/// </value>
     public static bool CanResume
     {
-        get { return !string.IsNullOrEmpty(PlayerPrefs.GetString(PlayerName + "JSON__RESUME__")); }
+        get { return !string.IsNullOrEmpty(FilePrefs.GetString(PlayerName + "JSON__RESUME__")); }
     }
 
     /// <summary>
@@ -488,7 +488,7 @@ public static class JSONLevelSerializer
     /// </summary>
     public static void Resume()
     {
-        var data = PlayerPrefs.GetString(PlayerName + "JSON__RESUME__");
+        var data = FilePrefs.GetString(PlayerName + "JSON__RESUME__");
         if (!string.IsNullOrEmpty(data))
         {
             var se = UnitySerializer.JSONDeserialize<SaveEntry>(data);
@@ -507,8 +507,8 @@ public static class JSONLevelSerializer
     private static void PerformSaveCheckPoint(string name, bool urgent)
     {
         var newGame = CreateSaveEntry(name, urgent);
-        PlayerPrefs.SetString(PlayerName + "JSON__RESUME__", UnitySerializer.JSONSerialize(newGame));
-		PlayerPrefs.Save();
+        FilePrefs.SetString(PlayerName + "JSON__RESUME__", UnitySerializer.JSONSerialize(newGame));
+		FilePrefs.Save();
     }
 
     /// <summary>
@@ -524,9 +524,9 @@ public static class JSONLevelSerializer
                 _cachedState = CreateSaveEntry("resume", true);
                 if (SaveResumeInformation)
                 {
-                    PlayerPrefs.SetString(PlayerName + "JSON__RESUME__",
+                    FilePrefs.SetString(PlayerName + "JSON__RESUME__",
                                           UnitySerializer.JSONSerialize(_cachedState));
-					PlayerPrefs.Save();
+					FilePrefs.Save();
                 }
             }
         }
@@ -642,10 +642,10 @@ public static class JSONLevelSerializer
             SavedGames[PlayerName].RemoveAt(SavedGames.Count - 1);
         }
 
-        SaveDataToPlayerPrefs();
+        SaveDataToFilePrefs();
 
-        PlayerPrefs.SetString(PlayerName + "JSON__RESUME__", UnitySerializer.JSONSerialize(newGame));
-		PlayerPrefs.Save();
+        FilePrefs.SetString(PlayerName + "JSON__RESUME__", UnitySerializer.JSONSerialize(newGame));
+		FilePrefs.Save();
         GameSaved();
     }
 
@@ -653,10 +653,10 @@ public static class JSONLevelSerializer
     /// <summary>
     ///   Saves the stored game data to player prefs.
     /// </summary>
-    public static void SaveDataToPlayerPrefs()
+    public static void SaveDataToFilePrefs()
     {
-        PlayerPrefs.SetString("JSON_Save_Game_Data_", UnitySerializer.JSONSerialize(SavedGames));
-		PlayerPrefs.Save();
+        FilePrefs.SetString("JSON_Save_Game_Data_", UnitySerializer.JSONSerialize(SavedGames));
+		FilePrefs.Save();
     }
 
     /// <summary>
@@ -1278,7 +1278,7 @@ public static class JSONLevelSerializer
             if (owner.Value != null)
             {
                 owner.Value.Remove(this);
-                SaveDataToPlayerPrefs();
+                SaveDataToFilePrefs();
             }
         }
 

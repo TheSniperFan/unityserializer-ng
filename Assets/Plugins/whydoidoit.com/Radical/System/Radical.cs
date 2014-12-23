@@ -574,12 +574,12 @@ public static class Radical
 			get
 			{
 				name = "Pref " + name;
-				return PlayerPrefs.HasKey(name) ? (PlayerPrefs.GetInt(name)==1) : false;
+				return FilePrefs.HasKey(name) ? (FilePrefs.GetInt(name)==1) : false;
 			}
 			set
 			{
 				name = "Pref " + name;
-				PlayerPrefs.SetInt(name, value ? 1 : 0);
+				FilePrefs.SetInt(name, value ? 1 : 0);
 			}
 		}
 	}
