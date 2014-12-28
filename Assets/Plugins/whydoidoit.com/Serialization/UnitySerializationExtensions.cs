@@ -799,7 +799,7 @@ public class SerializeLineRenderer : IComponentSerializer {
             using (new UnitySerializer.SerializationSplitScope()) {
                 var si = UnitySerializer.Deserialize<StoredInformation>(data);
                 if (si == null) {
-                    Debug.LogError("An error occured when getting the stored information for a renderer");
+                    Debug.LogError("An error occured when getting the stored information for a LineRenderer");
                     return;
                 }
                 renderer.enabled = si.Enabled;
@@ -864,7 +864,7 @@ public class SerializeTrailRenderer : IComponentSerializer {
             using (new UnitySerializer.SerializationSplitScope()) {
                 var si = UnitySerializer.Deserialize<StoredInformation>(data);
                 if (si == null) {
-                    Debug.LogError("An error occured when getting the stored information for a renderer");
+                    Debug.LogError("An error occured when getting the stored information for a TrailRenderer");
                     return;
                 }
                 renderer.enabled = si.Enabled;
