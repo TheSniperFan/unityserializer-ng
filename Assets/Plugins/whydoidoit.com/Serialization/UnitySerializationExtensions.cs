@@ -702,7 +702,6 @@ public class RagePixelSupport {
 [ComponentSerializerFor(typeof(Renderer))]
 // TODO: Reimplement functionality
 //[ComponentSerializerFor(typeof(ClothRenderer))]
-[ComponentSerializerFor(typeof(LineRenderer))]
 [ComponentSerializerFor(typeof(TrailRenderer))]
 [ComponentSerializerFor(typeof(ParticleRenderer))]
 [ComponentSerializerFor(typeof(SkinnedMeshRenderer))]
@@ -765,7 +764,65 @@ public class SerializeRenderer : IComponentSerializer {
         );
     }
     #endregion
+}
 
+[ComponentSerializerFor(typeof(LineRenderer))]
+public class SerializeLineRenderer : IComponentSerializer {
+    public static StoreMaterials Store;
+
+    public class StoredInformation : SerializeRenderer.StoredInformation {
+        public bool useWorldSpace;
+    }
+
+    #region IComponentSerializer implementation
+    public byte[] Serialize(Component component) {
+        using (new UnitySerializer.SerializationSplitScope()) {
+            var renderer = (LineRenderer)component;
+            var si = new StoredInformation();
+            si.Enabled = renderer.enabled;
+            if ((Store = renderer.GetComponent<StoreMaterials>()) != null) {
+
+                si.materials = renderer.materials.ToList();
+            }
+            si.castShadows = renderer.castShadows;
+            si.receiveShadows = renderer.receiveShadows;
+            si.useLightProbes = renderer.useLightProbes;
+            si.useWorldSpace = renderer.useWorldSpace;
+            var data = UnitySerializer.Serialize(si);
+            Store = null;
+            return data;
+
+        }
+    }
+
+    public void Deserialize(byte[] data, Component instance) {
+        var renderer = (LineRenderer)instance;
+        renderer.enabled = false;
+        UnitySerializer.AddFinalAction(() => {
+            Store = renderer.GetComponent<StoreMaterials>();
+
+            using (new UnitySerializer.SerializationSplitScope()) {
+                var si = UnitySerializer.Deserialize<StoredInformation>(data);
+                if (si == null) {
+                    Debug.LogError("An error occured when getting the stored information for a renderer");
+                    return;
+                }
+                renderer.enabled = si.Enabled;
+                if (si.materials.Count > 0) {
+                    if (Store != null) {
+                        renderer.materials = si.materials.ToArray();
+                    }
+                }
+                renderer.castShadows = si.castShadows;
+                renderer.receiveShadows = si.receiveShadows;
+                renderer.useLightProbes = si.useLightProbes;
+                renderer.useWorldSpace = si.useWorldSpace;
+            }
+            Store = null;
+        }
+        );
+    }
+    #endregion
 }
 
 
