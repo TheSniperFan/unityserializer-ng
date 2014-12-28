@@ -700,9 +700,6 @@ public class RagePixelSupport {
 }
 
 [ComponentSerializerFor(typeof(Renderer))]
-// TODO: Reimplement functionality
-//[ComponentSerializerFor(typeof(ClothRenderer))]
-[ComponentSerializerFor(typeof(ParticleRenderer))]
 [ComponentSerializerFor(typeof(SkinnedMeshRenderer))]
 [ComponentSerializerFor(typeof(MeshRenderer))]
 public class SerializeRenderer : IComponentSerializer {
