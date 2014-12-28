@@ -700,7 +700,6 @@ public class RagePixelSupport {
 }
 
 [ComponentSerializerFor(typeof(Renderer))]
-[ComponentSerializerFor(typeof(SkinnedMeshRenderer))]
 [ComponentSerializerFor(typeof(MeshRenderer))]
 public class SerializeRenderer : IComponentSerializer {
     public static StoreMaterials Store;
@@ -888,6 +887,72 @@ public class SerializeTrailRenderer : IComponentSerializer {
     }
     #endregion
 }
+
+[ComponentSerializerFor(typeof(SkinnedMeshRenderer))]
+public class SerializeSkinnedMeshRenderer : IComponentSerializer {
+    public static StoreMaterials Store;
+
+    public class StoredInformation : SerializeRenderer.StoredInformation {
+        public Vector3[] localBounds;
+        public SkinQuality quality;
+        public bool updateWhenOffscreen;
+    }
+
+    #region IComponentSerializer implementation
+    public byte[] Serialize(Component component) {
+        using (new UnitySerializer.SerializationSplitScope()) {
+            var renderer = (SkinnedMeshRenderer)component;
+            var si = new StoredInformation();
+            si.Enabled = renderer.enabled;
+            if ((Store = renderer.GetComponent<StoreMaterials>()) != null) {
+
+                si.materials = renderer.materials.ToList();
+            }
+            si.castShadows = renderer.castShadows;
+            si.receiveShadows = renderer.receiveShadows;
+            si.useLightProbes = renderer.useLightProbes;
+            si.localBounds = new Vector3[2] { renderer.localBounds.center, renderer.localBounds.size };
+            si.quality = renderer.quality;
+            si.updateWhenOffscreen = renderer.updateWhenOffscreen;
+            var data = UnitySerializer.Serialize(si);
+            Store = null;
+            return data;
+
+        }
+    }
+
+    public void Deserialize(byte[] data, Component instance) {
+        var renderer = (SkinnedMeshRenderer)instance;
+        renderer.enabled = false;
+        UnitySerializer.AddFinalAction(() => {
+            Store = renderer.GetComponent<StoreMaterials>();
+
+            using (new UnitySerializer.SerializationSplitScope()) {
+                var si = UnitySerializer.Deserialize<StoredInformation>(data);
+                if (si == null) {
+                    Debug.LogError("An error occured when getting the stored information for a SkinnedMeshRenderer");
+                    return;
+                }
+                renderer.enabled = si.Enabled;
+                if (si.materials.Count > 0) {
+                    if (Store != null) {
+                        renderer.materials = si.materials.ToArray();
+                    }
+                }
+                renderer.castShadows = si.castShadows;
+                renderer.receiveShadows = si.receiveShadows;
+                renderer.useLightProbes = si.useLightProbes;
+                renderer.localBounds = new Bounds(si.localBounds[0], si.localBounds[1]);
+                renderer.quality = si.quality;
+                renderer.updateWhenOffscreen = si.updateWhenOffscreen;
+            }
+            Store = null;
+        }
+        );
+    }
+    #endregion
+}
+
 
 
 [SubTypeSerializer(typeof(Component))]
