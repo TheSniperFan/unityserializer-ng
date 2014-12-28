@@ -713,9 +713,10 @@ public class SerializeRenderer : IComponentSerializer {
     public class StoredInformation {
         public bool Enabled;
         public List<Material> materials = new List<Material>();
+        public bool castShadows;
+        public bool receiveShadows;
+        public bool useLightProbes;
     }
-
-
 
     #region IComponentSerializer implementation
     public byte[] Serialize(Component component) {
@@ -727,6 +728,9 @@ public class SerializeRenderer : IComponentSerializer {
 
                 si.materials = renderer.materials.ToList();
             }
+            si.castShadows = renderer.castShadows;
+            si.receiveShadows = renderer.receiveShadows;
+            si.useLightProbes = renderer.useLightProbes;
             var data = UnitySerializer.Serialize(si);
             Store = null;
             return data;
@@ -751,10 +755,10 @@ public class SerializeRenderer : IComponentSerializer {
                     if (Store != null) {
                         renderer.materials = si.materials.ToArray();
                     }
-
-
                 }
-
+                renderer.castShadows = si.castShadows;
+                renderer.receiveShadows = si.receiveShadows;
+                renderer.useLightProbes = si.useLightProbes;
             }
             Store = null;
         }
