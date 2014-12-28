@@ -549,20 +549,35 @@ public class SerializeNavMeshAgent : IComponentSerializer {
 [ComponentSerializerFor(typeof(Camera))]
 public class SerializeCamera : IComponentSerializer {
     public class CameraData {
+        public RenderingPath renderingPath;
         public float fieldOfView;
         public float nearClipPlane;
         public float farClipPlane;
         public float depth;
-
+        public Rect rect;
+        public bool useOcclusionCulling;
+        public bool hdr;
+        public RenderTexture targetTexture;
+        public bool orthographic;
+        public float orthographicSize;
+        public Color backgroundColor;
     }
     #region IComponentSerializer implementation
     public byte[] Serialize(Component component) {
         var camera = (Camera)component;
         var cd = new CameraData {
+            renderingPath = camera.actualRenderingPath,
             fieldOfView = camera.fieldOfView,
             depth = camera.depth,
             nearClipPlane = camera.nearClipPlane,
-            farClipPlane = camera.farClipPlane
+            farClipPlane = camera.farClipPlane,
+            rect = camera.rect,
+            useOcclusionCulling = camera.useOcclusionCulling,
+            hdr = camera.hdr,
+            targetTexture = camera.targetTexture,
+            orthographic = camera.orthographic,
+            orthographicSize = camera.orthographicSize,
+            backgroundColor = camera.backgroundColor
         };
         return UnitySerializer.Serialize(cd);
     }
@@ -570,10 +585,18 @@ public class SerializeCamera : IComponentSerializer {
     public void Deserialize(byte[] data, Component instance) {
         var cd = UnitySerializer.Deserialize<CameraData>(data);
         var camera = (Camera)instance;
+        camera.renderingPath = cd.renderingPath;
         camera.fieldOfView = cd.fieldOfView;
         camera.nearClipPlane = cd.nearClipPlane;
         camera.farClipPlane = cd.farClipPlane;
         camera.depth = cd.depth;
+        camera.rect = cd.rect;
+        camera.useOcclusionCulling = cd.useOcclusionCulling;
+        camera.hdr = cd.hdr;
+        camera.targetTexture = cd.targetTexture;
+        camera.orthographic = cd.orthographic;
+        camera.orthographicSize = cd.orthographicSize;
+        camera.backgroundColor = cd.backgroundColor;
     }
     #endregion
 }
