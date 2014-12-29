@@ -219,7 +219,6 @@ public class SerializeTerrain : ComponentSerializerExtensionBase<Terrain> {
     }
 }
 
-[ComponentSerializerFor(typeof(WheelCollider))]
 [ComponentSerializerFor(typeof(TerrainCollider))]
 public class SerializeCollider : ComponentSerializerExtensionBase<Collider> {
     public override IEnumerable<object> Save(Collider target) {
@@ -246,6 +245,74 @@ public class SerializeMeshCollider : ComponentSerializerExtensionBase<MeshCollid
         instance.sharedMesh = (Mesh)data[3];
         instance.enabled = (bool)data[4];
     }
+}
+
+[ComponentSerializerFor(typeof(WheelCollider))]
+public class SerializeWheelCollider : IComponentSerializer {
+    public class StoredInformation {
+        public bool Enabled;
+        public float brakeTorque;
+        public Vector3 center;
+        public float forceAppPointDistance;
+        public WheelFrictionCurve forwardFriction;
+        public float mass;
+        public float motorTorque;
+        public float radius;
+        public WheelFrictionCurve sidewaysFriction;
+        public float steerAngle;
+        public float suspensionDistance;
+        public JointSpring suspensionSpring;
+    }
+
+    #region IComponentSerializer implementation
+    public byte[] Serialize(Component component) {
+        using (new UnitySerializer.SerializationSplitScope()) {
+            var collider = (WheelCollider)component;
+            var si = new StoredInformation();
+            si.Enabled = collider.enabled;
+            si.brakeTorque = collider.brakeTorque;
+            si.center = collider.center;
+            si.forceAppPointDistance = collider.forceAppPointDistance;
+            si.forwardFriction = collider.forwardFriction;
+            si.mass = collider.mass;
+            si.motorTorque = collider.motorTorque;
+            si.radius = collider.radius;
+            si.sidewaysFriction = collider.sidewaysFriction;
+            si.steerAngle = collider.steerAngle;
+            si.suspensionDistance = collider.suspensionDistance;
+            si.suspensionSpring = collider.suspensionSpring;
+            var data = UnitySerializer.Serialize(si);
+            return data;
+        }
+    }
+
+    public void Deserialize(byte[] data, Component instance) {
+        var collider = (WheelCollider)instance;
+        collider.enabled = false;
+        UnitySerializer.AddFinalAction(() => {
+            using (new UnitySerializer.SerializationSplitScope()) {
+                var si = UnitySerializer.Deserialize<StoredInformation>(data);
+                if (si == null) {
+                    Debug.LogError("An error occured when getting the stored information for a WheelCollider");
+                    return;
+                }
+                collider.enabled = si.Enabled;
+                collider.brakeTorque = si.brakeTorque;
+                collider.center = si.center;
+                collider.forceAppPointDistance = si.forceAppPointDistance;
+                collider.forwardFriction = si.forwardFriction;
+                collider.mass = si.mass;
+                collider.motorTorque = si.motorTorque;
+                collider.radius = si.radius;
+                collider.sidewaysFriction = si.sidewaysFriction;
+                collider.steerAngle = si.steerAngle;
+                collider.suspensionDistance = si.suspensionDistance;
+                collider.suspensionSpring = si.suspensionSpring;
+            }
+        }
+        );
+    }
+    #endregion
 }
 
 [ComponentSerializerFor(typeof(CapsuleCollider))]
