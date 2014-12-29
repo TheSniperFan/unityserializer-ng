@@ -237,7 +237,7 @@ public class SerializeCollider : ComponentSerializerExtensionBase<Collider> {
 [ComponentSerializerFor(typeof(CapsuleCollider))]
 public class SerializeCapsuleCollider : ComponentSerializerExtensionBase<CapsuleCollider> {
     public override IEnumerable<object> Save(CapsuleCollider target) {
-        return new object[] { target.isTrigger, target.radius, target.center.x, target.center.y, target.center.z, target.height, target.enabled };
+        return new object[] { target.isTrigger, target.radius, target.center.x, target.center.y, target.center.z, target.height, target.enabled, target.sharedMaterial, target.direction };
     }
     public override void LoadInto(object[] data, CapsuleCollider instance) {
         instance.isTrigger = (bool)data[0];
@@ -245,7 +245,8 @@ public class SerializeCapsuleCollider : ComponentSerializerExtensionBase<Capsule
         instance.center = new Vector3((float)data[2], (float)data[3], (float)data[4]);
         instance.height = (float)data[5];
         instance.enabled = (bool)data[6];
-
+        instance.sharedMaterial = (PhysicMaterial)data[7];
+        instance.direction = (int)data[8];
     }
 }
 
