@@ -447,11 +447,7 @@ public class SerializeScriptableObjectReference : SerializerExtensionBase<object
 public class SerializeGameObjectReference : SerializerExtensionBase<GameObject> {
     static SerializeGameObjectReference() {
         UnitySerializer.CanSerialize += (tp) => {
-            return !(
-                typeof(Bounds).IsAssignableFrom(tp) ||
-                typeof(MeshFilter).IsAssignableFrom(tp)
-
-                );
+            return !typeof(MeshFilter).IsAssignableFrom(tp);
         };
     }
 
@@ -893,7 +889,7 @@ public class SerializeSkinnedMeshRenderer : IComponentSerializer {
     public static StoreMaterials Store;
 
     public class StoredInformation : SerializeRenderer.StoredInformation {
-        public Vector3[] localBounds;
+        public Bounds localBounds;
         public SkinQuality quality;
         public bool updateWhenOffscreen;
     }
@@ -911,7 +907,7 @@ public class SerializeSkinnedMeshRenderer : IComponentSerializer {
             si.castShadows = renderer.castShadows;
             si.receiveShadows = renderer.receiveShadows;
             si.useLightProbes = renderer.useLightProbes;
-            si.localBounds = new Vector3[2] { renderer.localBounds.center, renderer.localBounds.size };
+            si.localBounds = renderer.localBounds;
             si.quality = renderer.quality;
             si.updateWhenOffscreen = renderer.updateWhenOffscreen;
             var data = UnitySerializer.Serialize(si);
@@ -942,7 +938,7 @@ public class SerializeSkinnedMeshRenderer : IComponentSerializer {
                 renderer.castShadows = si.castShadows;
                 renderer.receiveShadows = si.receiveShadows;
                 renderer.useLightProbes = si.useLightProbes;
-                renderer.localBounds = new Bounds(si.localBounds[0], si.localBounds[1]);
+                renderer.localBounds = si.localBounds;
                 renderer.quality = si.quality;
                 renderer.updateWhenOffscreen = si.updateWhenOffscreen;
             }
