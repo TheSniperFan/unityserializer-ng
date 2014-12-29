@@ -220,15 +220,15 @@ public class SerializeTerrain : ComponentSerializerExtensionBase<Terrain> {
 }
 
 [ComponentSerializerFor(typeof(TerrainCollider))]
-public class SerializeCollider : ComponentSerializerExtensionBase<Collider> {
-    public override IEnumerable<object> Save(Collider target) {
-        return new object[] { target.isTrigger, target.enabled };
+public class SerializeCollider : ComponentSerializerExtensionBase<TerrainCollider> {
+    public override IEnumerable<object> Save(TerrainCollider target) {
+        return new object[] { target.sharedMaterial, target.terrainData, target.enabled };
     }
 
-    public override void LoadInto(object[] data, Collider instance) {
-        instance.isTrigger = (bool)data[0];
-        instance.enabled = (bool)data[1];
-
+    public override void LoadInto(object[] data, TerrainCollider instance) {
+        instance.sharedMaterial = (PhysicMaterial)data[0];
+        instance.terrainData = (TerrainData)data[1];
+        instance.enabled = (bool)data[2];
     }
 }
 
