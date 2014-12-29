@@ -253,14 +253,14 @@ public class SerializeCapsuleCollider : ComponentSerializerExtensionBase<Capsule
 [ComponentSerializerFor(typeof(SphereCollider))]
 public class SerializeSphereCollider : ComponentSerializerExtensionBase<SphereCollider> {
     public override IEnumerable<object> Save(SphereCollider target) {
-        return new object[] { target.isTrigger, target.radius, target.center.x, target.center.y, target.center.z, target.enabled };
+        return new object[] { target.isTrigger, target.radius, target.center.x, target.center.y, target.center.z, target.enabled, target.sharedMaterial };
     }
     public override void LoadInto(object[] data, SphereCollider instance) {
         instance.isTrigger = (bool)data[0];
         instance.radius = (float)data[1];
         instance.center = new Vector3((float)data[2], (float)data[3], (float)data[4]);
         instance.enabled = (bool)data[5];
-
+        instance.sharedMaterial = (PhysicMaterial)data[6];
     }
 }
 
