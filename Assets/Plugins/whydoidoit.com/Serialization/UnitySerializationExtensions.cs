@@ -569,9 +569,10 @@ public class SerializeGameObjectReference : SerializerExtensionBase<GameObject> 
 [ComponentSerializerFor(typeof(NavMeshAgent))]
 public class SerializeNavMeshAgent : IComponentSerializer {
     public class StoredInfo {
-        public bool hasPath, offMesh;
-        public float x, y, z, speed, angularSpeed, height, offset, acceleration;
-        public int passable = -1;
+        public bool hasPath, offMesh, autoBraking, autoTraverseOffMeshLink, autoRepath;
+        public float x, y, z, speed, angularSpeed, height, offset, acceleration, radius, stoppingDistance;
+        public int passable = -1, avoidancePriority;
+        public ObstacleAvoidanceType obstacleAvoidanceType;
     }
 
     #region IComponentSerializer implementation
@@ -588,8 +589,14 @@ public class SerializeNavMeshAgent : IComponentSerializer {
             offset = agent.baseOffset,
             hasPath = agent.hasPath,
             offMesh = agent.isOnOffMeshLink,
-            passable = agent.walkableMask
-
+            passable = agent.areaMask,
+            radius = agent.radius,
+            stoppingDistance = agent.stoppingDistance,
+            autoBraking = agent.autoBraking,
+            obstacleAvoidanceType = agent.obstacleAvoidanceType,
+            avoidancePriority = agent.avoidancePriority,
+            autoTraverseOffMeshLink = agent.autoTraverseOffMeshLink,
+            autoRepath = agent.autoRepath
         });
     }
 
@@ -601,12 +608,20 @@ public class SerializeNavMeshAgent : IComponentSerializer {
         Loom.QueueOnMainThread(() => {
             var si = UnitySerializer.Deserialize<StoredInfo>(data);
             agent.speed = si.speed;
+            agent.acceleration = si.acceleration;
             agent.angularSpeed = si.angularSpeed;
             agent.height = si.height;
             agent.baseOffset = si.offset;
-            agent.walkableMask = si.passable;
-            if (si.hasPath && !agent.isOnOffMeshLink) {
+            agent.areaMask = si.passable;
+            agent.radius = si.radius;
+            agent.stoppingDistance = si.stoppingDistance;
+            agent.autoBraking = si.autoBraking;
+            agent.obstacleAvoidanceType = si.obstacleAvoidanceType;
+            agent.avoidancePriority = si.avoidancePriority;
+            agent.autoTraverseOffMeshLink = si.autoTraverseOffMeshLink;
+            agent.autoRepath = si.autoRepath;
 
+            if (si.hasPath && !agent.isOnOffMeshLink) {
                 agent.enabled = true;
                 //if(agent.CalculatePath( new Vector3 (si.x, si.y, si.z), path))
                 //{
