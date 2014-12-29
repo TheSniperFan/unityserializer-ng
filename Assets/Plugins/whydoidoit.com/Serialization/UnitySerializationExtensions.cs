@@ -220,7 +220,6 @@ public class SerializeTerrain : ComponentSerializerExtensionBase<Terrain> {
 }
 
 [ComponentSerializerFor(typeof(WheelCollider))]
-[ComponentSerializerFor(typeof(MeshCollider))]
 [ComponentSerializerFor(typeof(TerrainCollider))]
 public class SerializeCollider : ComponentSerializerExtensionBase<Collider> {
     public override IEnumerable<object> Save(Collider target) {
@@ -231,6 +230,21 @@ public class SerializeCollider : ComponentSerializerExtensionBase<Collider> {
         instance.isTrigger = (bool)data[0];
         instance.enabled = (bool)data[1];
 
+    }
+}
+
+[ComponentSerializerFor(typeof(MeshCollider))]
+public class SerializeMeshCollider : ComponentSerializerExtensionBase<MeshCollider> {
+    public override IEnumerable<object> Save(MeshCollider target) {
+        return new object[] { target.convex, target.isTrigger, target.sharedMaterial, target.sharedMesh, target.enabled };
+    }
+
+    public override void LoadInto(object[] data, MeshCollider instance) {
+        instance.convex = (bool)data[0];
+        instance.isTrigger = (bool)data[1];
+        instance.sharedMaterial = (PhysicMaterial)data[2];
+        instance.sharedMesh = (Mesh)data[3];
+        instance.enabled = (bool)data[4];
     }
 }
 
