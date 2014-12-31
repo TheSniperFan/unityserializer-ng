@@ -15,12 +15,14 @@ namespace UnitySerializerNG.FilePreferences {
         private static GameObject QuitObject;
 
         private static string root = Path.GetFullPath(Application.persistentDataPath) + Path.DirectorySeparatorChar + "persistentData";
+        private string profileName;
         private string path;
 
         private Dictionary<string, T> dict = new Dictionary<string, T>();
 
-        public DataContainer(string filename) {
-            path = root + Path.DirectorySeparatorChar + filename;
+        public DataContainer(string filename, string profile = "default") {
+            this.profileName = profile;
+            path = root + Path.DirectorySeparatorChar + profile + Path.DirectorySeparatorChar + filename;
 
             if (File.Exists(path)) {
                 IFormatter formatter = new BinaryFormatter();
@@ -42,11 +44,17 @@ namespace UnitySerializerNG.FilePreferences {
                 RebuildFile();
             }
 
-            QuitObject = new GameObject("FilePrefs_QuitObject", typeof(SaveOnQuit));
+            if (Application.isPlaying && SaveOnQuit.Instances < 1) {
+                QuitObject = new GameObject("FilePrefs_QuitObject", typeof(SaveOnQuit));
+            }
         }
 
         private void RebuildFile() {
-            File.Delete(path);
+            if(File.Exists(path))
+                File.Delete(path);
+
+            if (!Directory.Exists(root + Path.DirectorySeparatorChar + profileName))
+                Directory.CreateDirectory(root + Path.DirectorySeparatorChar + profileName);
 
             IFormatter formatter = new BinaryFormatter();
             Stream stream = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None);
@@ -67,19 +75,25 @@ namespace UnitySerializerNG.FilePreferences {
 
         public void Save() {
             IFormatter formatter = new BinaryFormatter();
-            Stream stream = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None);
-
             try {
-                formatter.Serialize(stream, dict);
+                Stream stream = new FileStream(path, FileMode.Create, FileAccess.Write, FileShare.None);
+
+                try {
+                    formatter.Serialize(stream, dict);
+                }
+                catch (SerializationException e) {
+                    Debug.LogException(e);
+                }
+                catch (Exception e) {
+                    Debug.LogException(e);
+                }
+                finally {
+                    stream.Close();
+                }
             }
-            catch (SerializationException e) {
-                Debug.LogException(e);
-            }
-            catch (Exception e) {
-                Debug.LogException(e);
-            }
-            finally {
-                stream.Close();
+            catch (Exception) {
+                RebuildFile();
+                Save();
             }
         }
 

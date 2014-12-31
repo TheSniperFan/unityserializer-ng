@@ -9,8 +9,6 @@ using UnitySerializerNG.FilePreferences;
 public static class FilePrefs {
     private static GameObject QuitObject;
 
-    private static string root = Path.GetFullPath(Application.persistentDataPath) + Path.DirectorySeparatorChar + "persistentData";
-
     private static DataContainer<string> stringData = new DataContainer<string>("str");
 
     private static DataContainer<float> floatData = new DataContainer<float>("fpn");

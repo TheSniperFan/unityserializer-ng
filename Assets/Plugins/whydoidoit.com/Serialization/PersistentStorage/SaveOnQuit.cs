@@ -2,15 +2,13 @@
 
 namespace UnitySerializerNG.FilePreferences {
     public class SaveOnQuit : MonoBehaviour {
-        private static int instances;
+        public static int Instances {
+            get;
+            private set;
+        }
 
-        private void Awake() {
-            if (Application.isPlaying) {
-                instances++;
-
-                if (instances > 1)
-                    DestroyObject(gameObject);
-            }
+        public SaveOnQuit() {
+            Instances++;
         }
 
         private void OnApplicationQuit() {
