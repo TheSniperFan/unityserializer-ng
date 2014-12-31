@@ -553,9 +553,7 @@ public class JSONLevelLoader : MonoBehaviour
 
 			loading = false;
             LevelSerializer.IsDeserializing = false;
-#if US_ROOMS
             RoomManager.loadingRoom = false;
-#endif
             //Restore the time scale
 			whenCompleted(rootObject, loadedGameObjects.ToList());
             //Get rid of the current object that is holding this level loader, it was
