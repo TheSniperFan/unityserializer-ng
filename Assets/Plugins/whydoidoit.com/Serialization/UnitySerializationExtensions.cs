@@ -795,7 +795,7 @@ public class SerializeRenderer : IComponentSerializer {
     public class StoredInformation {
         public bool Enabled;
         public List<Material> materials = new List<Material>();
-        public bool castShadows;
+        public UnityEngine.Rendering.ShadowCastingMode shadowCastingMode;
         public bool receiveShadows;
         public bool useLightProbes;
     }
@@ -810,7 +810,7 @@ public class SerializeRenderer : IComponentSerializer {
 
                 si.materials = renderer.materials.ToList();
             }
-            si.castShadows = renderer.castShadows;
+            si.shadowCastingMode = renderer.shadowCastingMode;
             si.receiveShadows = renderer.receiveShadows;
             si.useLightProbes = renderer.useLightProbes;
             var data = UnitySerializer.Serialize(si);
@@ -838,7 +838,7 @@ public class SerializeRenderer : IComponentSerializer {
                         renderer.materials = si.materials.ToArray();
                     }
                 }
-                renderer.castShadows = si.castShadows;
+                renderer.shadowCastingMode = si.shadowCastingMode;
                 renderer.receiveShadows = si.receiveShadows;
                 renderer.useLightProbes = si.useLightProbes;
             }
@@ -867,7 +867,7 @@ public class SerializeLineRenderer : IComponentSerializer {
 
                 si.materials = renderer.materials.ToList();
             }
-            si.castShadows = renderer.castShadows;
+            si.shadowCastingMode = renderer.shadowCastingMode;
             si.receiveShadows = renderer.receiveShadows;
             si.useLightProbes = renderer.useLightProbes;
             si.useWorldSpace = renderer.useWorldSpace;
@@ -896,7 +896,7 @@ public class SerializeLineRenderer : IComponentSerializer {
                         renderer.materials = si.materials.ToArray();
                     }
                 }
-                renderer.castShadows = si.castShadows;
+                renderer.shadowCastingMode = si.shadowCastingMode;
                 renderer.receiveShadows = si.receiveShadows;
                 renderer.useLightProbes = si.useLightProbes;
                 renderer.useWorldSpace = si.useWorldSpace;
@@ -929,7 +929,7 @@ public class SerializeTrailRenderer : IComponentSerializer {
 
                 si.materials = renderer.materials.ToList();
             }
-            si.castShadows = renderer.castShadows;
+            si.shadowCastingMode = renderer.shadowCastingMode;
             si.receiveShadows = renderer.receiveShadows;
             si.useLightProbes = renderer.useLightProbes;
             si.autodestruct = renderer.autodestruct;
@@ -961,7 +961,7 @@ public class SerializeTrailRenderer : IComponentSerializer {
                         renderer.materials = si.materials.ToArray();
                     }
                 }
-                renderer.castShadows = si.castShadows;
+                renderer.shadowCastingMode = si.shadowCastingMode;
                 renderer.receiveShadows = si.receiveShadows;
                 renderer.useLightProbes = si.useLightProbes;
                 renderer.autodestruct = si.autodestruct;
@@ -996,7 +996,7 @@ public class SerializeSkinnedMeshRenderer : IComponentSerializer {
 
                 si.materials = renderer.materials.ToList();
             }
-            si.castShadows = renderer.castShadows;
+            si.shadowCastingMode = renderer.shadowCastingMode;
             si.receiveShadows = renderer.receiveShadows;
             si.useLightProbes = renderer.useLightProbes;
             si.localBounds = renderer.localBounds;
@@ -1027,7 +1027,7 @@ public class SerializeSkinnedMeshRenderer : IComponentSerializer {
                         renderer.materials = si.materials.ToArray();
                     }
                 }
-                renderer.castShadows = si.castShadows;
+                renderer.shadowCastingMode = si.shadowCastingMode;
                 renderer.receiveShadows = si.receiveShadows;
                 renderer.useLightProbes = si.useLightProbes;
                 renderer.localBounds = si.localBounds;
