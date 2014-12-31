@@ -42,7 +42,9 @@ namespace UnitySerializerNG.FilePreferences {
                 RebuildFile();
             }
 
-            QuitObject = new GameObject("FilePrefs_QuitObject", typeof(SaveOnQuit));
+            if (Application.isPlaying && SaveOnQuit.Instances < 1) {
+                QuitObject = new GameObject("FilePrefs_QuitObject", typeof(SaveOnQuit));
+            }
         }
 
         private void RebuildFile() {
