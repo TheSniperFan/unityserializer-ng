@@ -1,3 +1,4 @@
+#if US_ROOMS
 // /* ------------------
 //       ${Name} 
 //       (c)3Radical 2012
@@ -57,4 +58,4 @@ public class PlayerSpawnPoint : MonoBehaviour
 	}
 	
 }
-
+#endif

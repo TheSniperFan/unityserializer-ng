@@ -513,7 +513,9 @@ public class LevelLoader : MonoBehaviour
 			
             LevelSerializer.IsDeserializing = false;
 			_loading = false;
+#if US_ROOMS
             RoomManager.loadingRoom = false;
+#endif
             whenCompleted(rootObject, loadedGameObjects.ToList());
 
 			//Get rid of the current object that is holding this level loader, it was

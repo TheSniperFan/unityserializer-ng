@@ -63,12 +63,14 @@ public class UnitySerializerWindow : EditorWindow
 		area.width = 16;
 		area.height = 16;
 		
+#if US_ROOMS
 		if(go.GetComponent<SaveGameManager>() || go.GetComponent<RoomDataSaveGameStorage>() || go.GetComponent<RadicalRoutineHelper>())
 		{
 			area.x = width-54;
 			GUI.DrawTexture(area, manager);
 		}
-		
+#endif
+
 		var c = go.GetComponent<UniqueIdentifier> ();
 		if (c != null)
 		{
@@ -86,12 +88,15 @@ public class UnitySerializerWindow : EditorWindow
 			
 		}
 		
+#if US_ROOMS
 		if(go.GetComponent<DontStoreObjectInRoom>()!= null && room != null)
 		{
 			area.x = width;
 			GUI.DrawTexture(area, room);
 
 		}
+#endif
+
 		if(go.GetComponent<StoreMaterials>() != null && materials != null)
 		{
 			area.x =  width - 18;
@@ -215,9 +220,11 @@ public class UnitySerializerWindow : EditorWindow
 			}
 		
 			if (GUILayout.Toggle (showRoom, "Rooms", "toolbarbutton", GUILayout.ExpandWidth (false))) {
-				showMain = false;
-				showRoom = true;
-				showReferences = false;
+                // FIX: Room manager completely crashes the editor.
+                Debug.LogWarning("Room manager has been disabled in this release, because it crashes the editor.");
+                //showMain = false;
+                //showRoom = true;
+                //showReferences = false;
 			}
 			if (_assetStore.SelectMany (s => s.Value).All (s => s.Value.Count <= 1)) {
 				GUI.color = Color.white;
@@ -530,6 +537,7 @@ public class UnitySerializerWindow : EditorWindow
 			GUILayout.EndVertical ();
 		}
 		
+#if US_ROOMS
 		if (showRoom) 
 		{
 			if (GameObject.FindObjectsOfType (typeof(Room)).Length > 0) {
@@ -691,6 +699,7 @@ public class UnitySerializerWindow : EditorWindow
 			GUILayout.Space (4);
 			GUILayout.EndVertical ();
 		}
+#endif
 		Repaint ();
 	
 	}
