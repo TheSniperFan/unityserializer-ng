@@ -16,7 +16,7 @@ using Serialization;
 [ExecuteInEditMode]
 [DontStore]
 public class StoreMaterials : MonoBehaviour {
-    public List<MaterialProperty> MaterialProperties = new List<MaterialProperty>();
+    public Index<string, List<MaterialProperty>> MaterialProperties = new Index<string, List<MaterialProperty>>();
     static Index<string, List<MaterialProperty>> cache = new Index<string, List<MaterialProperty>>();
 
 
@@ -47,12 +47,20 @@ public class StoreMaterials : MonoBehaviour {
     }
 
     private void OnEnable() {
+        MaterialProperties.Clear();
         cache.Clear();
-        MaterialProperties = GetComponent<Renderer>().sharedMaterials.Where(m => m).SelectMany(m => GetShaderProperties(m)).Discrete(m => m.name).ToList();
+        foreach (Material mat in GetComponent<Renderer>().sharedMaterials) {
+            if (!MaterialProperties.ContainsKey(mat.name))
+                MaterialProperties.Add(mat.name, GetShaderProperties(mat));
+        }
     }
 
     private void OnDisable() {
         cache.Clear();
+    }
+
+    internal void ForceRefresh() {
+        OnEnable();
     }
 
     public List<StoredValue> GetValues(Material m) {
@@ -136,35 +144,58 @@ public class StoreMaterials : MonoBehaviour {
 
 [CustomEditor(typeof(StoreMaterials))]
 public class StoreMaterialsEditor : Editor {
-    bool show;
+    List<bool> show = new List<bool>();
+    StoreMaterials script;
+
+    private void Rebuild() {
+        show.Clear();
+
+        for (int i = 0; i < script.MaterialProperties.Count + 1; i++)
+            show.Add(false);
+    }
 
     public override void OnInspectorGUI() {
-        show = EditorGUILayout.Foldout(show, "Material properties");
-        if (show) {
-            StoreMaterials script = (StoreMaterials)target;
+        script = (StoreMaterials)target;
 
-            foreach (StoreMaterials.MaterialProperty property in script.MaterialProperties) {
-                string type = "";
+        if ((show.Count - 1 - script.MaterialProperties.Count) != 0)
+            Rebuild();
 
-                switch (property.type) {
-                    case ShaderUtil.ShaderPropertyType.Color:
-                        type = "COLOR";
-                        break;
-                    case ShaderUtil.ShaderPropertyType.Float:
-                        type = "FLOAT";
-                        break;
-                    case ShaderUtil.ShaderPropertyType.Range:
-                        type = "FLOAT";
-                        break;
-                    case ShaderUtil.ShaderPropertyType.TexEnv:
-                        type = "TEXTURE";
-                        break;
-                    case ShaderUtil.ShaderPropertyType.Vector:
-                        type = "VECTOR";
-                        break;
+        show[0] = EditorGUILayout.Foldout(show[0], "Material properties");
+        if (show[0]) {
+            int i = 1;
+            foreach (string mat in script.MaterialProperties.Keys) {
+                show[i] = EditorGUILayout.Foldout(show[i], mat);
+                if (show[i]) {
+                    foreach (StoreMaterials.MaterialProperty property in script.MaterialProperties[mat]) {
+                        string type = "";
+
+                        switch (property.type) {
+                            case ShaderUtil.ShaderPropertyType.Color:
+                                type = "COLOR";
+                                break;
+                            case ShaderUtil.ShaderPropertyType.Float:
+                                type = "FLOAT";
+                                break;
+                            case ShaderUtil.ShaderPropertyType.Range:
+                                type = "FLOAT";
+                                break;
+                            case ShaderUtil.ShaderPropertyType.TexEnv:
+                                type = "TEXTURE";
+                                break;
+                            case ShaderUtil.ShaderPropertyType.Vector:
+                                type = "VECTOR";
+                                break;
+                        }
+
+                        GUILayout.Label("[" + type + "]\t" + property.description);
+                    }
                 }
+                i++;
+            }
 
-                GUILayout.Label("[" + type + "]\t" + property.description);
+            EditorGUILayout.Space();
+            if (GUILayout.Button("Refresh")) {
+                script.ForceRefresh();
             }
         }
     }
