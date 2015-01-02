@@ -1041,6 +1041,227 @@ public class SerializeSkinnedMeshRenderer : IComponentSerializer {
     #endregion
 }
 
+[ComponentSerializerFor(typeof(AudioChorusFilter))]
+public class SerializeAudioChorusFilter : IComponentSerializer {
+    public class StoredInformation {
+        public bool enabled;
+        public float delay;
+        public float depth;
+        public float dryMix;
+        public float rate;
+        public float wetMix1;
+        public float wetMix2;
+        public float wetMix3;
+    }
+
+    #region IComponentSerializer implementation
+    public byte[] Serialize(Component component) {
+        using (new UnitySerializer.SerializationSplitScope()) {
+            var filter = (AudioChorusFilter)component;
+            var si = new StoredInformation();
+            si.enabled = filter.enabled;
+            si.delay = filter.delay;
+            si.depth = filter.depth;
+            si.dryMix = filter.dryMix;
+            si.rate = filter.rate;
+            si.wetMix1 = filter.wetMix1;
+            si.wetMix2 = filter.wetMix2;
+            si.wetMix3 = filter.wetMix3;
+            var data = UnitySerializer.Serialize(si);
+            return data;
+        }
+    }
+
+    public void Deserialize(byte[] data, Component instance) {
+        var filter = (AudioChorusFilter)instance;
+        filter.enabled = false;
+        UnitySerializer.AddFinalAction(() => {
+            using (new UnitySerializer.SerializationSplitScope()) {
+                var si = UnitySerializer.Deserialize<StoredInformation>(data);
+                if (si == null) {
+                    Debug.LogError("An error occured when getting the stored information for a AudioChorusFilter");
+                    return;
+                }
+                filter.delay = si.delay;
+                filter.depth = si.depth;
+                filter.dryMix = si.dryMix;
+                filter.rate = si.rate;
+                filter.wetMix1 = si.wetMix1;
+                filter.wetMix2 = si.wetMix2;
+                filter.wetMix3 = si.wetMix3;
+                filter.enabled = si.enabled;
+            }
+        }
+        );
+    }
+    #endregion
+}
+
+[ComponentSerializerFor(typeof(AudioDistortionFilter))]
+public class SerializeAudioDistortionFilter : IComponentSerializer {
+    public class StoredInformation {
+        public bool enabled;
+        public float distortionLevel;
+    }
+
+    #region IComponentSerializer implementation
+    public byte[] Serialize(Component component) {
+        using (new UnitySerializer.SerializationSplitScope()) {
+            var filter = (AudioDistortionFilter)component;
+            var si = new StoredInformation();
+            si.enabled = filter.enabled;
+            si.distortionLevel = filter.distortionLevel;
+            var data = UnitySerializer.Serialize(si);
+            return data;
+        }
+    }
+
+    public void Deserialize(byte[] data, Component instance) {
+        var filter = (AudioDistortionFilter)instance;
+        filter.enabled = false;
+        UnitySerializer.AddFinalAction(() => {
+            using (new UnitySerializer.SerializationSplitScope()) {
+                var si = UnitySerializer.Deserialize<StoredInformation>(data);
+                if (si == null) {
+                    Debug.LogError("An error occured when getting the stored information for a AudioDistortionFilter");
+                    return;
+                }
+                filter.distortionLevel = si.distortionLevel;
+                filter.enabled = si.enabled;
+            }
+        }
+        );
+    }
+    #endregion
+}
+
+[ComponentSerializerFor(typeof(AudioEchoFilter))]
+public class SerializeAudioEchoFilter : IComponentSerializer {
+    public class StoredInformation {
+        public bool enabled;
+        public float decayRatio;
+        public float delay;
+        public float dryMix;
+        public float wetMix;
+    }
+
+    #region IComponentSerializer implementation
+    public byte[] Serialize(Component component) {
+        using (new UnitySerializer.SerializationSplitScope()) {
+            var filter = (AudioEchoFilter)component;
+            var si = new StoredInformation();
+            si.enabled = filter.enabled;
+            si.decayRatio = filter.decayRatio;
+            si.delay = filter.delay;
+            si.wetMix = filter.wetMix;
+            var data = UnitySerializer.Serialize(si);
+            return data;
+        }
+    }
+
+    public void Deserialize(byte[] data, Component instance) {
+        var filter = (AudioEchoFilter)instance;
+        filter.enabled = false;
+        UnitySerializer.AddFinalAction(() => {
+            using (new UnitySerializer.SerializationSplitScope()) {
+                var si = UnitySerializer.Deserialize<StoredInformation>(data);
+                if (si == null) {
+                    Debug.LogError("An error occured when getting the stored information for a AudioEchoFilter");
+                    return;
+                }
+                filter.decayRatio = si.decayRatio;
+                filter.delay = si.delay;
+                filter.wetMix = si.wetMix;
+                filter.enabled = si.enabled;
+            }
+        }
+        );
+    }
+    #endregion
+}
+
+[ComponentSerializerFor(typeof(AudioLowPassFilter))]
+public class SerializeAudioLowPassFilter : IComponentSerializer {
+    public class StoredInformation {
+        public bool enabled;
+        public float cutoffFrequency;
+        public float lowpassResonanceQ;
+    }
+
+    #region IComponentSerializer implementation
+    public byte[] Serialize(Component component) {
+        using (new UnitySerializer.SerializationSplitScope()) {
+            var filter = (AudioLowPassFilter)component;
+            var si = new StoredInformation();
+            si.enabled = filter.enabled;
+            si.cutoffFrequency = filter.cutoffFrequency;
+            si.lowpassResonanceQ = filter.lowpassResonanceQ;
+            var data = UnitySerializer.Serialize(si);
+            return data;
+        }
+    }
+
+    public void Deserialize(byte[] data, Component instance) {
+        var filter = (AudioLowPassFilter)instance;
+        filter.enabled = false;
+        UnitySerializer.AddFinalAction(() => {
+            using (new UnitySerializer.SerializationSplitScope()) {
+                var si = UnitySerializer.Deserialize<StoredInformation>(data);
+                if (si == null) {
+                    Debug.LogError("An error occured when getting the stored information for a AudioLowPassFilter");
+                    return;
+                }
+                filter.cutoffFrequency = si.cutoffFrequency;
+                filter.lowpassResonanceQ = si.lowpassResonanceQ;
+                filter.enabled = si.enabled;
+            }
+        }
+        );
+    }
+    #endregion
+}
+
+[ComponentSerializerFor(typeof(AudioHighPassFilter))]
+public class SerializeAudioHighPassFilter : IComponentSerializer {
+    public class StoredInformation {
+        public bool enabled;
+        public float cutoffFrequency;
+        public float highpassResonanceQ;
+    }
+
+    #region IComponentSerializer implementation
+    public byte[] Serialize(Component component) {
+        using (new UnitySerializer.SerializationSplitScope()) {
+            var filter = (AudioHighPassFilter)component;
+            var si = new StoredInformation();
+            si.enabled = filter.enabled;
+            si.cutoffFrequency = filter.cutoffFrequency;
+            si.highpassResonanceQ = filter.highpassResonanceQ;
+            var data = UnitySerializer.Serialize(si);
+            return data;
+        }
+    }
+
+    public void Deserialize(byte[] data, Component instance) {
+        var filter = (AudioHighPassFilter)instance;
+        filter.enabled = false;
+        UnitySerializer.AddFinalAction(() => {
+            using (new UnitySerializer.SerializationSplitScope()) {
+                var si = UnitySerializer.Deserialize<StoredInformation>(data);
+                if (si == null) {
+                    Debug.LogError("An error occured when getting the stored information for a AudioHighPassFilter");
+                    return;
+                }
+                filter.cutoffFrequency = si.cutoffFrequency;
+                filter.highpassResonanceQ = si.highpassResonanceQ;
+                filter.enabled = si.enabled;
+            }
+        }
+        );
+    }
+    #endregion
+}
+
 
 
 [SubTypeSerializer(typeof(Component))]
