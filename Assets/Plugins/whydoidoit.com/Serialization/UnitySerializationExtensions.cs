@@ -463,6 +463,7 @@ public class SerializeMaterial : SerializerExtensionBase<Material> {
 [Serializer(typeof(TextAsset))]
 [SubTypeSerializer(typeof(Mesh))]
 [Serializer(typeof(AnimationClip))]
+[Serializer(typeof(Sprite))]
 public class SerializeAssetReference : SerializerExtensionBase<object> {
     public static SerializeAssetReference instance = new SerializeAssetReference();
 
