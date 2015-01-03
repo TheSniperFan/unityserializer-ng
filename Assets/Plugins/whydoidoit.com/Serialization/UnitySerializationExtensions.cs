@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using System.Collections;
 using System;
 using System.Collections.Generic;
@@ -464,6 +466,12 @@ public class SerializeMaterial : SerializerExtensionBase<Material> {
 [SubTypeSerializer(typeof(Mesh))]
 [Serializer(typeof(AnimationClip))]
 [Serializer(typeof(Sprite))]
+[Serializer(typeof(Button.ButtonClickedEvent))]
+[Serializer(typeof(Slider.SliderEvent))]
+[Serializer(typeof(Scrollbar.ScrollEvent))]
+[Serializer(typeof(Toggle.ToggleEvent))]
+[Serializer(typeof(InputField.OnChangeEvent))]
+[Serializer(typeof(InputField.SubmitEvent))]
 public class SerializeAssetReference : SerializerExtensionBase<object> {
     public static SerializeAssetReference instance = new SerializeAssetReference();
 
@@ -1263,6 +1271,50 @@ public class SerializeAudioHighPassFilter : IComponentSerializer {
     #endregion
 }
 
+[ComponentSerializerFor(typeof(EventSystem))]
+public class SerializeEventSystem : IComponentSerializer {
+    public class StoredInformation {
+        public bool enabled;
+        public GameObject firstSelectedGameObject;
+        public int pixelDragThreshold;
+        public bool sendNavigationEvents;
+    }
+
+    #region IComponentSerializer implementation
+    public byte[] Serialize(Component component) {
+        using (new UnitySerializer.SerializationSplitScope()) {
+            var system = (EventSystem)component;
+            var si = new StoredInformation();
+            si.enabled = system.enabled;
+            si.firstSelectedGameObject = system.firstSelectedGameObject;
+            si.pixelDragThreshold = system.pixelDragThreshold;
+            si.sendNavigationEvents = system.sendNavigationEvents;
+            var data = UnitySerializer.Serialize(si);
+            return data;
+        }
+    }
+
+    public void Deserialize(byte[] data, Component instance) {
+        var system = (EventSystem)instance;
+        system.enabled = false;
+        UnitySerializer.AddFinalAction(() => {
+            using (new UnitySerializer.SerializationSplitScope()) {
+                var si = UnitySerializer.Deserialize<StoredInformation>(data);
+                if (si == null) {
+                    Debug.LogError("An error occured when getting the stored information for a EventSystem");
+                    return;
+                }
+                system.firstSelectedGameObject = si.firstSelectedGameObject;
+                system.pixelDragThreshold = si.pixelDragThreshold;
+                system.sendNavigationEvents = si.sendNavigationEvents;
+                system.enabled = si.enabled;
+            }
+        }
+        );
+    }
+    #endregion
+}
+
 
 
 [SubTypeSerializer(typeof(Component))]
@@ -1364,6 +1416,23 @@ public class ProviderTransformAttributes : ProvideAttributes {
 		"localPosition",
 		"localRotation",
 		"localScale"
+	}, false) {
+    }
+}
+
+[AttributeListProvider(typeof(RectTransform))]
+public class ProviderRectTransformAttributes : ProvideAttributes {
+    public ProviderRectTransformAttributes()
+        : base(new string[] {
+		"anchoredPosition",
+		"anchoredPosition3D",
+		"anchorMax",
+		"anchorMin",
+		"offsetMax",
+		"offsetMin",
+		"pivot",
+        "rect",
+        "sizeDelta"
 	}, false) {
     }
 }
