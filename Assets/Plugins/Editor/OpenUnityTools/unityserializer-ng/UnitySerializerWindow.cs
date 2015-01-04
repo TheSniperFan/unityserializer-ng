@@ -22,7 +22,7 @@ public class UnitySerializerWindow : EditorWindow
 	static UnitySerializerWindow ()
 	{
 		EditorApplication.hierarchyWindowItemOnGUI += DrawThing;
-		var path = "Assets/Plugins/Editor/whydoidoit.com/Assets/";
+		var path = "Assets/Plugins/Editor/OpenUnityTools/unityserializer-ng/Assets/";
 	
 		uid = AssetDatabase.LoadAssetAtPath(path + "Id.psd", typeof(Texture2D)) as Texture2D;
 		room = AssetDatabase.LoadAssetAtPath(path + "Room.psd", typeof(Texture2D)) as Texture2D;
