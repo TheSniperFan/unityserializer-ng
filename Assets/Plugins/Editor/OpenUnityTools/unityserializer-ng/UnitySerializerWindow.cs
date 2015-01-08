@@ -517,9 +517,9 @@ public class UnitySerializerWindow : EditorWindow {
 
 #if US_ROOMS
         if (showRoom) {
-            if (GameObject.FindObjectsOfType(typeof(Room)).Length > 0) {
-
-                GUILayout.BeginVertical();
+            GUILayout.BeginVertical();
+            if (GameObject.FindObjectOfType<Room>()) {
+                
                 if (Selection.gameObjects.Length == 1) {
                     if (Selection.activeGameObject != null) {
                         GUILayout.Space(8);
@@ -622,8 +622,7 @@ public class UnitySerializerWindow : EditorWindow {
                     }
                 }
             }
-            GUILayout.FlexibleSpace();
-            if (GameObject.FindObjectsOfType(typeof(Room)).Length == 0) {
+            else {
                 GUI.color = new Color(1, 0.6f, 0.6f, 1f);
                 var style = new GUIStyle("label");
                 style.wordWrap = true;
