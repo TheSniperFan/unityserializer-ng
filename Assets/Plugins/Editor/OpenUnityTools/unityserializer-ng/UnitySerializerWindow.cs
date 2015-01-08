@@ -17,19 +17,20 @@ using UnityEditor;
 public class UnitySerializerWindow : EditorWindow
 {
 	
-	static Texture2D uid,room, manager,materials,store,prefab;
+	static Texture2D uid, room, room_exclude, manager, materials, store,prefab;
 	
 	static UnitySerializerWindow ()
 	{
 		EditorApplication.hierarchyWindowItemOnGUI += DrawThing;
 		var path = "Assets/Plugins/Editor/OpenUnityTools/unityserializer-ng/Assets/";
 	
-		uid = AssetDatabase.LoadAssetAtPath(path + "Id.psd", typeof(Texture2D)) as Texture2D;
-		room = AssetDatabase.LoadAssetAtPath(path + "Room.psd", typeof(Texture2D)) as Texture2D;
-		materials = AssetDatabase.LoadAssetAtPath(path + "Materials.psd", typeof(Texture2D)) as Texture2D;
-		store = AssetDatabase.LoadAssetAtPath(path + "Store.psd", typeof(Texture2D)) as Texture2D;
-		prefab = AssetDatabase.LoadAssetAtPath(path + "Prefab.psd", typeof(Texture2D)) as Texture2D;
-		manager = AssetDatabase.LoadAssetAtPath(path + "Manager.psd", typeof(Texture2D)) as Texture2D;
+		uid = AssetDatabase.LoadAssetAtPath(path + "Id.tga", typeof(Texture2D)) as Texture2D;
+		room = AssetDatabase.LoadAssetAtPath(path + "Room.tga", typeof(Texture2D)) as Texture2D;
+        room_exclude = AssetDatabase.LoadAssetAtPath(path + "RoomExclude.tga", typeof(Texture2D)) as Texture2D;
+		materials = AssetDatabase.LoadAssetAtPath(path + "Materials.tga", typeof(Texture2D)) as Texture2D;
+		store = AssetDatabase.LoadAssetAtPath(path + "Store.tga", typeof(Texture2D)) as Texture2D;
+		prefab = AssetDatabase.LoadAssetAtPath(path + "Prefab.tga", typeof(Texture2D)) as Texture2D;
+		manager = AssetDatabase.LoadAssetAtPath(path + "Manager.tga", typeof(Texture2D)) as Texture2D;
 		
 		if(!EditorPrefs.GetBool("ShowedWarning", false))
 		{
@@ -89,12 +90,14 @@ public class UnitySerializerWindow : EditorWindow
 		}
 		
 #if US_ROOMS
-		if(go.GetComponent<DontStoreObjectInRoom>()!= null && room != null)
-		{
-			area.x = width;
-			GUI.DrawTexture(area, room);
-
-		}
+        if (go.GetComponent<Room>() != null && go.GetComponent<RoomDataSaveGameStorage>() != null && room != null) {
+            area.x = width;
+            GUI.DrawTexture(area, room);
+        }
+        else if (go.GetComponent<DontStoreObjectInRoom>() != null && room_exclude != null) {
+            area.x = width;
+            GUI.DrawTexture(area, room_exclude);
+        }
 #endif
 
 		if(go.GetComponent<StoreMaterials>() != null && materials != null)
@@ -220,12 +223,15 @@ public class UnitySerializerWindow : EditorWindow
 			}
 		
 			if (GUILayout.Toggle (showRoom, "Rooms", "toolbarbutton", GUILayout.ExpandWidth (false))) {
-                // FIX: Room manager completely crashes the editor.
-                Debug.LogWarning("Room manager has been disabled in this release, because it crashes the editor.");
-                //showMain = false;
-                //showRoom = true;
-                //showReferences = false;
-			}
+                // FIX: Room manager completely crashes the editor, if no room manager is found.
+#if US_ROOMS
+                showMain = false;
+                showRoom = true;
+                showReferences = false;
+#else
+                Debug.LogWarning("Room manager has been disabled in this release, because it can crash the editor.");
+#endif
+            }
 			if (_assetStore.SelectMany (s => s.Value).All (s => s.Value.Count <= 1)) {
 				GUI.color = Color.white;
 			} else {
