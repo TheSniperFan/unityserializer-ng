@@ -458,8 +458,7 @@ public class UnitySerializerWindow : EditorWindow {
                 }
             }
             GUILayout.FlexibleSpace();
-            var items = GameObject.FindObjectsOfType(typeof(SaveGameManager));
-            if (items == null || items.Length == 0) {
+            if(GameObject.FindObjectsOfType<SaveGameManager>().Length == 0) {
                 GUI.color = new Color(1, 0.6f, 0.6f, 1f);
                 var style = new GUIStyle("label");
                 style.wordWrap = true;
@@ -621,7 +620,7 @@ public class UnitySerializerWindow : EditorWindow {
                         }
                     }
                 }
-            }
+            }   
             else {
                 GUI.color = new Color(1, 0.6f, 0.6f, 1f);
                 var style = new GUIStyle("label");
@@ -677,7 +676,6 @@ public class UnitySerializerWindow : EditorWindow {
         }
 #endif
         Repaint();
-
     }
 
     int stopWhenReady = 0;
