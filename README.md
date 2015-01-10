@@ -34,5 +34,9 @@ While the original developer supported iOS and Android, I do not. This does not 
   * Sprites
   * New Unity GUI components (RectTransform, etc.)
 
-##More changes##
-...
+#Installation#
+At the moment this asset is not available in the Unity Asset Store, due to Unity 5 still being beta and therefore subject to potentially big changes. The plan is to release it in the asset store, once Unity 5 stable is released.
+To install unityserializer-ng, just clone this repository and copy it into your project's directory.
+
+#How to use?#
+Tutorials will be written and released in the [Unify Community Wiki](http://wiki.unity3d.com/index.php/Main_Page). The old tutorials from are available on the [website of the original Unity Serializer](http://whydoidoit.com/unityserializer/) and still apply.
