@@ -13,6 +13,7 @@ On top of that, I'll extend already existing functionality. I want to serialize 
 ##Do you support X?##
 I support Unity 5. I do not support Unity 4 and older, because the old US is still available. If you want the new features and bug fixes of this for in the old US, you need to backport them yourself.
 While the original developer supported iOS and Android, I do not. This does not mean that this asset doesn't work with mobile devices. It just means that I'm no mobile developer and as such have no way of testing it. The only thing I can guarantee, is that I won't break compatability on purpose.
+Besites that I removed the iTweenSerializer and PlayMaker addons. Not using those assets myself, I cannot possibly guarantee stability.
 
 
 #What's new?#
