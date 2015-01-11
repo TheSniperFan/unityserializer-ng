@@ -7,7 +7,10 @@ public class Spawner : MonoBehaviour {
     private Transform target;
     [SerializeField]
     private GameObject other;
+    [SerializeField]
+    private Material material;
 
+    [SerializeThis]
     private static int numberSpawned = 0;
 
     [SerializeField]
@@ -37,10 +40,10 @@ public class Spawner : MonoBehaviour {
                 direction2 = direction2 + (target.transform.right * (-4.0f + ((Random.value * 8.0f))));
 
                 GameObject go = new GameObject();
+                MeshRenderer renderer = go.AddComponent<MeshRenderer>();
+                renderer.material = material;
                 MeshFilter mesh = go.AddComponent<MeshFilter>();
                 mesh.sharedMesh = createMesh;
-                MeshRenderer renderer = go.AddComponent<MeshRenderer>();
-                renderer.material = new Material(Shader.Find("Diffuse"));
                 go.AddComponent<EmptyObjectIdentifier>();
                 Rigidbody body = go.AddComponent<Rigidbody>();
                 body.GetComponent<Rigidbody>().angularVelocity = new Vector3(Random.value * 20.0f, Random.value * 20.0f, Random.value * 20.0f);
@@ -48,10 +51,10 @@ public class Spawner : MonoBehaviour {
                 if (Random.value < 0.1f) {
                     Light l = go.AddComponent<Light>();
                     l.GetComponent<Light>().type = LightType.Point;
+                    l.shadows = LightShadows.Hard;
                     l.GetComponent<Light>().intensity = 2.0f;
                     l.GetComponent<Light>().color = new Color(Random.value / 2.0f + 0.5f, Random.value / 2.0f + 0.5f, Random.value / 2.0f + 0.5f);
                 }
-                go.AddComponent<SaveAndReload>();
                 go.AddComponent<ColorMe>();
                 go.transform.position = direction2;
             }
@@ -59,8 +62,8 @@ public class Spawner : MonoBehaviour {
     }
 
     private void OnGUI() {
-        GUILayout.BeginArea(new Rect(0.0f, Screen.height - 60.0f, 100.0f, 100.0f));
-        GUILayout.Label(numberSpawned.ToString());
+        GUILayout.BeginArea(new Rect(0.0f, 0.0f, 175.0f, 100.0f));
+        GUILayout.Label(string.Format("Spawned {0} GameObjects", numberSpawned.ToString()));
         GUILayout.EndArea();
     }
 }

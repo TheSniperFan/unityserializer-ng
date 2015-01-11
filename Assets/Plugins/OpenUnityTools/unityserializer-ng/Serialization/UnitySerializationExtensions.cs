@@ -796,7 +796,7 @@ public class RagePixelSupport {
     }
 }
 
-[ComponentSerializerFor(typeof(Renderer))]
+//[ComponentSerializerFor(typeof(Renderer))]
 [ComponentSerializerFor(typeof(MeshRenderer))]
 public class SerializeRenderer : IComponentSerializer {
     public static StoreMaterials Store;

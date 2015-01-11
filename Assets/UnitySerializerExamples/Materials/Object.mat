@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Floor
+  m_Name: Object
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
   m_ShaderKeywords: _LIGHTMAPPING_REALTIME
   m_CustomRenderQueue: -1
@@ -104,7 +104,7 @@ Material:
       data:
         first:
           name: _Glossiness
-        second: 0
+        second: .630999982
       data:
         first:
           name: _BumpScale
@@ -132,7 +132,7 @@ Material:
       data:
         first:
           name: _Metallic
-        second: 0
+        second: .0430000015
     m_Colors:
       data:
         first:
@@ -141,7 +141,7 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: .303343028, g: .683333337, b: .259154111, a: 1}
+        second: {r: 1, g: 1, b: 1, a: 1}
       data:
         first:
           name: _EmissionColorUI

@@ -5,37 +5,37 @@ using UnityEngine;
 using System.Collections;
 
 public class ColorMe : MonoBehaviourEx {
+    // Use this for initialization
+    private void Start() {
+        if (!GetComponent<UniqueIdentifier>().IsDeserializing) {
+            StartCoroutine("DoColorMe");
+        }
+    }
 
-		// Use this for initialization
-	void Start () {
-		if(!GetComponent<UniqueIdentifier>().IsDeserializing)
-		{
-			StartCoroutine("DoColorMe");
-		}
-	}
-	
-	IEnumerator DoColorMe()
-	{
-		var color = GetComponent<Renderer>().material.color;
-		var target = Color.blue;
-		while(true)
-		{
-			var t = 0f;
-			while(t < 1)
-			{
-				
-				GetComponent<Renderer>().material.color = Color.Lerp(color, target, t);
-				t += Time.deltaTime/3;
-				yield return null;
-			}
-			t = 0;
-			while(t < 1)
-			{
-				GetComponent<Renderer>().material.color = Color.Lerp(target, color, t);
-				t += Time.deltaTime/3;
-				yield return null;
-			}
-			
-		}
-	}
+    private IEnumerator DoColorMe() {
+        Renderer renderer = GetComponent<Renderer>();
+        Light light = GetComponent<Light>();
+
+        Color color = renderer.material.color;
+        Color target = Color.blue;
+        while (true) {
+            var t = 0.0f;
+            while (t < 1.0f) {
+
+                renderer.material.color = Color.Lerp(color, target, t);
+                if (light)
+                    light.color = renderer.material.color;
+                t += Time.deltaTime / 3.0f;
+                yield return null;
+            }
+            t = 0.0f;
+            while (t < 1.0f) {
+                renderer.material.color = Color.Lerp(target, color, t);
+                if (light)
+                    light.color = renderer.material.color;
+                t += Time.deltaTime / 3.0f;
+                yield return null;
+            }
+        }
+    }
 }

@@ -2,12 +2,10 @@ using UnityEngine;
 using System.Collections;
 
 public class SwitchMesh : MonoBehaviour {
+    [SerializeField]
+	private Mesh mesh;
 	
-	
-	public Mesh mesh;
-	
-	void OnMouseDown()
-	{
+	private void OnMouseDown()  {
 		GetComponent<MeshFilter>().mesh = mesh;
 	}
 }

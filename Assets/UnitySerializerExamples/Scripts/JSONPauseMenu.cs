@@ -17,6 +17,14 @@ public class JSONPauseMenu : MonoBehaviour {
             pausedGUI.enabled = false;
     }
 
+    private void OnEnable() {
+        LevelSerializer.Progress += HandleLevelSerializerProgress;
+    }
+
+    private void OnDisable() {
+        LevelSerializer.Progress -= HandleLevelSerializerProgress;
+    }
+
     private void Update() {
         if (Input.GetKeyUp(KeyCode.P)) {
             paused = !paused;
@@ -40,7 +48,7 @@ public class JSONPauseMenu : MonoBehaviour {
 
     private void OnGUI() {
         if (!paused) {
-            GUILayout.BeginArea(new Rect(200, 10, 400, 20));
+            GUILayout.BeginArea(new Rect(200.0f, 10.0f, 400.0f, 20.0f));
             GUILayout.BeginVertical();
             GUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
@@ -53,14 +61,14 @@ public class JSONPauseMenu : MonoBehaviour {
         }
 
         GUIStyle box = "box";
-        GUILayout.BeginArea(new Rect(Screen.width / 2 - 200, Screen.height / 2 - 300, 400, 600), box);
+        GUILayout.BeginArea(new Rect(Screen.width * 0.5f - 200.0f, Screen.height * 0.5f - 300.0f, 400.0f, 600.0f), box);
 
         GUILayout.BeginVertical();
         GUILayout.FlexibleSpace();
         if (GUILayout.Button("Save Game")) {
             JSONLevelSerializer.SaveGame(gameName);
         }
-        GUILayout.Space(60);
+        GUILayout.Space(60.0f);
         foreach (JSONLevelSerializer.SaveEntry sg in JSONLevelSerializer.SavedGames[JSONLevelSerializer.PlayerName]) {
             if (GUILayout.Button(sg.Caption)) {
                 sg.Load();
@@ -71,5 +79,9 @@ public class JSONPauseMenu : MonoBehaviour {
         GUILayout.FlexibleSpace();
         GUILayout.EndVertical();
         GUILayout.EndArea();
+    }
+
+    private static void HandleLevelSerializerProgress(string section, float complete) {
+        Debug.Log(string.Format("Progress on {0} = {1:0.00%}", section, complete));
     }
 }

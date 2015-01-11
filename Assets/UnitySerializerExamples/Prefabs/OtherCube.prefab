@@ -12,7 +12,6 @@ GameObject:
   - 65: {fileID: 6500000}
   - 23: {fileID: 2300000}
   - 54: {fileID: 5400000}
-  - 114: {fileID: 11400006}
   - 114: {fileID: 11400004}
   - 114: {fileID: 11400002}
   - 114: {fileID: 11400000}
@@ -35,7 +34,6 @@ GameObject:
   - 65: {fileID: 6500002}
   - 23: {fileID: 2300002}
   - 54: {fileID: 5400002}
-  - 114: {fileID: 11400014}
   - 114: {fileID: 11400012}
   - 114: {fileID: 11400010}
   - 114: {fileID: 11400008}
@@ -58,9 +56,9 @@ GameObject:
   - 65: {fileID: 6500004}
   - 23: {fileID: 2300004}
   - 54: {fileID: 5400004}
-  - 114: {fileID: 11400020}
   - 114: {fileID: 11400018}
   - 114: {fileID: 11400016}
+  - 114: {fileID: 11407806}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -80,7 +78,6 @@ GameObject:
   - 65: {fileID: 6500006}
   - 23: {fileID: 2300006}
   - 54: {fileID: 5400006}
-  - 114: {fileID: 11400030}
   - 114: {fileID: 11400028}
   - 114: {fileID: 11400026}
   - 114: {fileID: 11400024}
@@ -105,7 +102,6 @@ GameObject:
   - 23: {fileID: 2300008}
   - 54: {fileID: 5400008}
   - 114: {fileID: 11400046}
-  - 114: {fileID: 11400044}
   - 114: {fileID: 11400042}
   - 114: {fileID: 11400040}
   - 114: {fileID: 11400038}
@@ -197,13 +193,15 @@ MeshRenderer:
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_LightmapTilingOffsetDynamic: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 040cb578f791c694cbe501e9edfc9292, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
-  m_UseReflectionProbes: 1
+  m_ReflectionProbeUsage: 1
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_ImportantGI: 0
   m_AutoUVMaxDistance: .5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
@@ -223,13 +221,15 @@ MeshRenderer:
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_LightmapTilingOffsetDynamic: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 040cb578f791c694cbe501e9edfc9292, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
-  m_UseReflectionProbes: 1
+  m_ReflectionProbeUsage: 1
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_ImportantGI: 0
   m_AutoUVMaxDistance: .5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
@@ -249,13 +249,15 @@ MeshRenderer:
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_LightmapTilingOffsetDynamic: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 040cb578f791c694cbe501e9edfc9292, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
-  m_UseReflectionProbes: 1
+  m_ReflectionProbeUsage: 1
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_ImportantGI: 0
   m_AutoUVMaxDistance: .5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
@@ -275,13 +277,15 @@ MeshRenderer:
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_LightmapTilingOffsetDynamic: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 040cb578f791c694cbe501e9edfc9292, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
-  m_UseReflectionProbes: 1
+  m_ReflectionProbeUsage: 1
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_ImportantGI: 0
   m_AutoUVMaxDistance: .5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
@@ -301,13 +305,15 @@ MeshRenderer:
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_LightmapTilingOffsetDynamic: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 040cb578f791c694cbe501e9edfc9292, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
-  m_UseReflectionProbes: 1
+  m_ReflectionProbeUsage: 1
   m_ProbeAnchor: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_ImportantGI: 0
   m_AutoUVMaxDistance: .5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
@@ -506,11 +512,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e43eca1594e1c404d9ca96908baac6c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaterialProperties:
-  - name: 5f436f6c6f72
-    type: 0
-  - name: 5f4d61696e546578
-    type: 2
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -522,25 +523,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd6fd92df3c974ed690d61989eb183ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _id: 62313365343733652d376165322d346263302d383866352d623563383637306663633764
+  IsDeserializing: 0
+  _id: 49fdf3d7-3472-46dd-9538-017edd5bdaf5
   classId: 62646231623366642d333336302d346339612d386631372d643063383934333932343336
   StoreAllComponents: 1
   Components: []
---- !u!114 &11400006
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e10f9d1bf2364e86a05ff5b1c4a1dcb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  time: 2
-  activated: 0
-  texture: {fileID: 0}
-  referenceTexture: {fileID: 2800000, guid: fed4741e0c42b410bbefdca58e195b16, type: 3}
 --- !u!114 &11400008
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -564,11 +551,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e43eca1594e1c404d9ca96908baac6c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaterialProperties:
-  - name: 5f436f6c6f72
-    type: 0
-  - name: 5f4d61696e546578
-    type: 2
 --- !u!114 &11400012
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -580,25 +562,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd6fd92df3c974ed690d61989eb183ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _id: 63323564646338372d653437372d343639622d616436382d613861343237343464353064
+  IsDeserializing: 0
+  _id: 847bcde3-7601-4c4a-b9e6-c121153a469a
   classId: 64373339306363302d633566642d343937342d386363372d303364376337646232376363
   StoreAllComponents: 1
   Components: []
---- !u!114 &11400014
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100002}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e10f9d1bf2364e86a05ff5b1c4a1dcb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  time: 2
-  activated: 0
-  texture: {fileID: 0}
-  referenceTexture: {fileID: 2800000, guid: fed4741e0c42b410bbefdca58e195b16, type: 3}
 --- !u!114 &11400016
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -610,11 +578,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e43eca1594e1c404d9ca96908baac6c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaterialProperties:
-  - name: 5f436f6c6f72
-    type: 0
-  - name: 5f4d61696e546578
-    type: 2
 --- !u!114 &11400018
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -626,25 +589,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd6fd92df3c974ed690d61989eb183ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _id: 61646265623637642d656566342d343736322d626534352d363630636534633366623638
+  IsDeserializing: 0
+  _id: 87da3cb0-eb34-4f5f-bbcf-9b2471a825f1
   classId: 36373065653230652d666262662d346439662d383435302d363137626563353063633838
   StoreAllComponents: 1
   Components: []
---- !u!114 &11400020
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100004}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e10f9d1bf2364e86a05ff5b1c4a1dcb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  time: 2
-  activated: 0
-  texture: {fileID: 0}
-  referenceTexture: {fileID: 2800000, guid: fed4741e0c42b410bbefdca58e195b16, type: 3}
 --- !u!114 &11400022
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -669,7 +618,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   reference: {fileID: 100004}
-  createTextureTest: {fileID: 11400044}
+  createTextureTest: {fileID: 11407806}
 --- !u!114 &11400026
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -681,11 +630,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e43eca1594e1c404d9ca96908baac6c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaterialProperties:
-  - name: 5f436f6c6f72
-    type: 0
-  - name: 5f4d61696e546578
-    type: 2
 --- !u!114 &11400028
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -697,25 +641,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd6fd92df3c974ed690d61989eb183ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _id: 35656664386238642d666237322d343630352d626338642d353632346434343766333061
+  IsDeserializing: 0
+  _id: 219fb051-73c2-414b-b52b-b2d214eca51f
   classId: 30393763333639352d353936352d343864382d616332332d346264343436333433393066
   StoreAllComponents: 1
   Components: []
---- !u!114 &11400030
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100006}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e10f9d1bf2364e86a05ff5b1c4a1dcb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  time: 2
-  activated: 0
-  texture: {fileID: 0}
-  referenceTexture: {fileID: 2800000, guid: fed4741e0c42b410bbefdca58e195b16, type: 3}
 --- !u!114 &11400032
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -749,11 +679,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e43eca1594e1c404d9ca96908baac6c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaterialProperties:
-  - name: 5f436f6c6f72
-    type: 0
-  - name: 5f4d61696e546578
-    type: 2
 --- !u!114 &11400038
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -777,6 +702,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8fb50b7bbe504030b2849f791c67273, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  aChild: {fileID: 0}
 --- !u!114 &11400042
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -788,21 +714,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d44335c9d199445b8ad1c51d50847a66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &11400044
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100008}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e10f9d1bf2364e86a05ff5b1c4a1dcb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  time: 2
-  activated: 1
-  texture: {fileID: 0}
-  referenceTexture: {fileID: 2800000, guid: fed4741e0c42b410bbefdca58e195b16, type: 3}
 --- !u!114 &11400046
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -814,10 +725,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5ac6d84dca7648fab1a3a905dbc55b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _id: 34343232333931642d316361622d343931662d383966652d653665653236613436343936
+  IsDeserializing: 0
+  _id: bfaa1cfd-adf4-4036-bafc-a98cfeb42794
   classId: 63666230316539642d333030302d343432332d623330362d393932393234333664353765
   StoreAllComponents: 1
   Components: []
+--- !u!114 &11407806
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 727a773b9e73c3f418fa4cbf5edef254, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
