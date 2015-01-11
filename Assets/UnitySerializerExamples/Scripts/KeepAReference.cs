@@ -12,11 +12,9 @@ using System.Linq;
 using Serialization;
 
 [AddComponentMenu("Storage/Tests/KeepAReference")]
-public class KeepAReference : MonoBehaviour
-{
-	public GameObject reference;
-	public CreateTexture createTextureTest;
-	
+public class KeepAReference : MonoBehaviour {
+    public GameObject reference;
+    public HelloWorld createTextureTest;
 }
 
 
