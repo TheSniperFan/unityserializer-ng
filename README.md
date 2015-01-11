@@ -15,6 +15,18 @@ I support Unity 5. I do not support Unity 4 and older, because the old US is sti
 While the original developer supported iOS and Android, I do not. This does not mean that this asset doesn't work with mobile devices. It just means that I'm no mobile developer and as such have no way of testing it. The only thing I can guarantee, is that I won't break compatability on purpose.
 Besites that I removed the iTweenSerializer and PlayMaker addons. Not using those assets myself, I cannot possibly guarantee stability.
 
+##Why was JSON support dopped?##
+To understand why I dropped such a huge feature, you have to understand where I'm coming from. I did not fork Unity Serializer out of boredom. I forked it, because I use it in a game I am developing. This explains why I consider certain things to be a waste of time, while others see it differently.
+JSON support was one such thing. It was broken. The serializer would throw a fit whenever Renderers were deserialized. I don't know whether other components were broken too, but Renderes were. I spent a couple hours trying to find out what's happening and eventually was able to do so.
+The issue boiled down to the serializer using binary deserialization at certain times, when JSON deserialization should have been used. I wasn't able to fix JSON support, without breaking binary serialization. After a couple of hours I finally decided to drop JSON support alltogether. I develop this asset for my game and I, at no point, had any intention to use JSON serialization for a couple of reasons including JSON serialization...
+* creating faaaaar bigger files
+* making cheating much easier
+* being considerably slower
+
+I did not want to spend more time fixing an issue with a part of the asset, I never wanted to use in the first place. On the bright side, I was able to delete ~9000 lines of code by removing JSON support. Doing so put a smile on my face, because of how painfully bad the code is documentation of the original Unity Serializer is.
+
+Almost 9000 less lines of code to worry about.
+
 
 #What's new?#
 ##Fixes##
