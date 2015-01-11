@@ -329,17 +329,6 @@ namespace Serialization
         private static readonly HashSet<Type> privateTypes = new HashSet<Type>();
         private static readonly Stack<Type> currentTypes = new Stack<Type>();
         public static int currentVersion;
-        private static int _forceJSON;
-		
-		public static void ForceJSONSerialization()
-		{
-			_forceJSON ++;
-		}
-		
-		public static void UnforceJSONSerialization()
-		{
-			_forceJSON--;
-		}
 		
 
         /// <summary>
@@ -635,10 +624,6 @@ namespace Serialization
         /// <returns> </returns>
         public static T Deserialize<T>(byte[] array) where T : class
         {
-            if (_forceJSON > 0)
-            {
-                return JSONDeserialize<T>(ConvertBytesToJSON(array));
-            }
             return Deserialize(array) as T;
         }
 		
@@ -678,22 +663,6 @@ namespace Serialization
 			w.Flush();
 			f.Close();
 		}
-		
-		
-        public static T JSONDeserialize<T>(string data) where T : class
-        {
-            return JSONDeserialize(data) as T;
-        }
-
-        /// <summary>
-        ///   Deserialize from a stream to a type
-        /// </summary>
-        /// <param name="stream"> </param>
-        /// <returns> </returns>
-        public static T JSONDeserialize<T>(Stream stream) where T : class
-        {
-            return JSONDeserialize(stream) as T;
-        }
 
 
         /// <summary>
@@ -1135,50 +1104,6 @@ namespace Serialization
             return Deserialize(inputStream, null);
         }
 
-        public static object JSONDeserialize(Stream inputStream)
-        {
-            return JSONDeserialize(inputStream, null);
-        }
-
-
-        public static object JSONDeserialize(Stream inputStream, object instance)
-        {
-            // this version always uses the BinarySerializer
-            using (new SerializationScope())
-            {
-                var v = Verbose;
-                CreateStacks();
-                try
-                {
-                    PushKnownTypes();
-                    PushPropertyNames();
-                    var rw = new StreamReader(inputStream);
-
-                    var f2 = rw.ReadToEnd();
-                    var serializer = new JSONSerializer(f2);
-                    serializer.StartDeserializing();
-                    var ob = DeserializeObject(new Entry()
-                                                   {
-                                                       Name = "root",
-                                                       Value = instance
-                                                   }, serializer);
-                    serializer.FinishedDeserializing();
-                    return ob;
-                }
-                catch (Exception e)
-                {
-                    Radical.LogError("Serialization error: " + e.ToString());
-                    return null;
-                }
-                finally
-                {
-                    PopKnownTypes();
-					PopPropertyNames();
-                    Verbose = v;
-                }
-            }
-        }
-
         public static object Deserialize(Stream inputStream, object instance)
         {
             // this version always uses the BinarySerializer
@@ -1224,36 +1149,6 @@ namespace Serialization
             }
         }
 
-        /// <summary>
-        ///   Escape the specified input for JSON.
-        /// </summary>
-        /// <param name='input'> Input. </param>
-        public static string Escape(string input)
-        {
-            return input.Replace("\\", "\\\\").Replace("\"", "\\\"");
-        }
-
-        /// <summary>
-        ///   Unescape a JSON string
-        /// </summary>
-        /// <returns> The escape. </returns>
-        /// <param name='input'> Input. </param>
-        public static string UnEscape(string input)
-        {
-            return input.Contains("\"") ? input : input.Replace("\\\"", "\"").Replace("\\\\", "\\");
-        }
-
-        private static string ConvertBytesToJSON(byte[] data)
-        {
-            var output = UnitySerializer.TextEncoding.GetString(data);
-            return output;
-        }
-
-        private static byte[] ConvertJSONToBytes(string data)
-        {
-            return UnitySerializer.TextEncoding.GetBytes(data);
-        }
-
         internal static void PopKnownTypes()
         {
 			if(SerializationScope.IsPrimaryScope)
@@ -1296,27 +1191,11 @@ namespace Serialization
         /// <returns> The rehydrated object represented by the data supplied </returns>
         public static object Deserialize(byte[] bytes)
         {
-            if (_forceJSON > 0)
-            {
-                return JSONDeserialize(ConvertBytesToJSON(bytes));
-            }
-
             using (new SerializationScope())
             {
                 using (var inputStream = new MemoryStream(bytes))
                 {
                     return Deserialize(inputStream);
-                }
-            }
-        }
-
-        public static object JSONDeserialize(string json)
-        {
-            using (new SerializationScope())
-            {
-                using (var inputStream = new MemoryStream(UnitySerializer.TextEncoding.GetBytes(UnEscape(json))))
-                {
-                    return JSONDeserialize(inputStream);
                 }
             }
         }
@@ -1334,24 +1213,6 @@ namespace Serialization
                 using (var inputStream = new MemoryStream(bytes))
                 {
                     Deserialize(inputStream, instance);
-                }
-            }
-        }
-
-        /// <summary>
-        ///   Convert a previously serialized object from a byte array 
-        ///   back into a .NET object
-        /// </summary>
-        /// <param name="json"> </param>
-        /// <param name="instance"> </param>
-        /// <returns> The rehydrated object represented by the data supplied </returns>
-        public static void JSONDeserializeInto(string json, object instance)
-        {
-            using (new SerializationScope())
-            {
-                using (var inputStream = new MemoryStream(UnitySerializer.TextEncoding.GetBytes(UnEscape(json))))
-                {
-                    JSONDeserialize(inputStream, instance);
                 }
             }
         }
@@ -1395,11 +1256,6 @@ namespace Serialization
             }
         }
 
-        public static void JSONSerialize(object item, IStorage storage)
-        {
-            JSONSerialize(item, storage, false);
-        }
-
 
         public static void Serialize(object item, IStorage storage)
         {
@@ -1432,65 +1288,10 @@ namespace Serialization
             }
         }
 
-        public static void JSONSerialize(object item, IStorage storage, bool forDeserializeInto)
-        {
-            var verbose = Verbose;
-            Verbose = false;
-            CreateStacks();
-            using (new SerializationScope())
-            {
-				SerializationScope.SetPrimaryScope();
-                try
-                {
-                    storage.StartSerializing();
-                    SerializeObject(new Entry()
-                                        {
-                                            Name = "root",
-                                            Value = item
-                                        }, storage, forDeserializeInto);
-                    storage.FinishedSerializing();
-                }
-                finally
-                {
-                    Verbose = verbose;
-                }
-            }
-        }
-
-        public static void JSONSerialize(object item, Stream outputStream)
-        {
-            JSONSerialize(item, outputStream, false);
-        }
-
 
         public static void Serialize(object item, Stream outputStream)
         {
             Serialize(item, outputStream, false);
-        }
-
-        public static void JSONSerialize(object item, Stream outputStream, bool forDeserializeInto)
-        {
-            CreateStacks();
-
-
-            using (new SerializationScope())
-            {
-				SerializationScope.SetPrimaryScope();
-                //var serializer = Activator.CreateInstance(SerializerType) as IStorage;
-                var serializer = new JSONSerializer();
-                //BinarySerializer serializer = new BinarySerializer();
-                serializer.StartSerializing();
-                SerializeObject(new Entry()
-                                    {
-                                        Name = "root",
-                                        Value = item
-                                    }, serializer, forDeserializeInto);
-                serializer.FinishedSerializing();
-                var outputWr = new StreamWriter(outputStream);
-                outputWr.Write(serializer.Data);
-                outputWr.Flush();
-                outputStream.Flush();
-            }
         }
 
         public static void Serialize(object item, Stream outputStream, bool forDeserializeInto)
@@ -1525,10 +1326,6 @@ namespace Serialization
         /// <returns> A byte array representation of the item </returns>
         public static byte[] Serialize(object item)
         {
-            if (_forceJSON > 0)
-            {
-                return ConvertJSONToBytes(JSONSerialize(item));
-            }
             using (new SerializationScope())
             {
                 using (var outputStream = new MemoryStream())
@@ -1537,40 +1334,6 @@ namespace Serialization
                     //Reset the verbose mode
                     return outputStream.ToArray();
                 }
-            }
-        }
-
-
-        /// <summary>
-        ///   Serialize an object into an array of bytes
-        /// </summary>
-        /// <param name="item"> The object to serialize </param>
-        /// <returns> A byte array representation of the item </returns>
-        public static string JSONSerialize(object item)
-        {
-            using (new SerializationScope())
-            {
-                using (var outputStream = new MemoryStream())
-                {
-                    JSONSerialize(item, outputStream);
-                    //Reset the verbose mode
-                    return UnitySerializer.TextEncoding.GetString(outputStream.ToArray());
-                }
-            }
-        }
-
-
-        public static string JSONSerializeForDeserializeInto(object item)
-        {
-            using (new SerializationScope())
-            {
-			    using (var outputStream = new MemoryStream())
-                {
-                    JSONSerialize(item, outputStream, true);
-                    //Reset the verbose mode
-                    return UnitySerializer.TextEncoding.GetString(outputStream.ToArray());
-                }
-			
             }
         }
 
@@ -1594,35 +1357,8 @@ namespace Serialization
         /// <param name="item"> The object to serialize </param>
         /// <param name="makeVerbose"> Whether the object should be serialized for forwards compatibility </param>
         /// <returns> A byte array representation of the item </returns>
-        public static string JSONSerialize(object item, bool makeVerbose)
-        {
-            using (new SerializationScope())
-            {
-                using (var outputStream = new MemoryStream())
-                {
-                    var v = Verbose;
-                    Verbose = makeVerbose;
-                    JSONSerialize(item, outputStream);
-                    Verbose = v;
-                    //Reset the verbose mode
-                    return UnitySerializer.TextEncoding.GetString(outputStream.ToArray());
-                }
-            }
-        }
-
-        /// <summary>
-        ///   Serialize an object into an array of bytes
-        /// </summary>
-        /// <param name="item"> The object to serialize </param>
-        /// <param name="makeVerbose"> Whether the object should be serialized for forwards compatibility </param>
-        /// <returns> A byte array representation of the item </returns>
         public static byte[] Serialize(object item, bool makeVerbose)
         {
-            if (_forceJSON > 0)
-            {
-                return ConvertJSONToBytes(JSONSerialize(item, makeVerbose));
-            }
-
             using (new SerializationScope())
             {
                 using (var outputStream = new MemoryStream())
@@ -3028,27 +2764,6 @@ namespace Serialization
         {
             public GetSet Setter;
             public Type Type;
-        }
-
-        #endregion
-
-        #region Nested type: ForceJSON
-
-        public class ForceJSON : IDisposable
-        {
-            public ForceJSON()
-            {
-                _forceJSON++;
-            }
-
-            #region IDisposable Members
-
-            public void Dispose()
-            {
-                _forceJSON--;
-            }
-
-            #endregion
         }
 
         #endregion

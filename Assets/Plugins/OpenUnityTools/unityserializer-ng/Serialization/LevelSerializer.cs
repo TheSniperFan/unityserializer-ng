@@ -148,8 +148,7 @@ public static class LevelSerializer
     //Stop cases
     private static readonly List<Type> _stopCases = new List<Type>();
 	/// <summary>
-	/// Indicates whether the system is deserializing a level - this value
-	/// is used no matter whether JSON or normal serialization is in effect
+	/// Indicates whether the system is deserializing a level
 	/// </summary>
     public static bool IsDeserializing;
     private static readonly List<object> createdPlugins = new List<object>();

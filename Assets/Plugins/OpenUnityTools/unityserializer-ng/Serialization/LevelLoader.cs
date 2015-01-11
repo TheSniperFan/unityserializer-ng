@@ -29,7 +29,6 @@ public class LevelLoader : MonoBehaviour
     private bool _loading = true;
     public bool showGUI = true;
     public float timeScaleAfterLoading = 1;
-	public bool useJSON;
     public Action<GameObject, List<GameObject>> whenCompleted = delegate { };
 
     public static event CreateObjectDelegate CreateGameObject = delegate { };
@@ -297,12 +296,7 @@ public class LevelLoader : MonoBehaviour
         {
             var currentProgress = 0;
 			UnitySerializer.FinalProcess process;
-			try
-			{
-				if(useJSON)
-				{
-					UnitySerializer.ForceJSONSerialization();
-				}
+			
 	            using (new UnitySerializer.SerializationSplitScope())
 	            {
 					using(new UnitySerializer.SerializationScope())
@@ -456,14 +450,7 @@ public class LevelLoader : MonoBehaviour
 						process = UnitySerializer.TakeOwnershipOfFinalization();
 					}
 				}
-			}
-			finally
-			{
-				if(useJSON)
-				{
-					UnitySerializer.UnforceJSONSerialization();
-				}
-			}
+			
 			
 			UnitySerializer.RunDeferredActions(process, 2, false);
             
