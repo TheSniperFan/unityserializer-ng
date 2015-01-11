@@ -463,12 +463,12 @@ GameObject:
   - 33: {fileID: 1124032546}
   - 23: {fileID: 1124032545}
   - 143: {fileID: 1124032547}
-  - 114: {fileID: 1124032550}
   - 114: {fileID: 1124032549}
   - 114: {fileID: 1124032552}
   - 54: {fileID: 1124032553}
   - 114: {fileID: 1124032548}
   - 114: {fileID: 1124032551}
+  - 114: {fileID: 1124032550}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -640,11 +640,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1124032543}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ab79d7f243824f5d9826bd83522c8df, type: 3}
+  m_Script: {fileID: 11500000, guid: e0088b1c66df68a49ae1db4b1c5f7d26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   canControl: 1
   useFixedUpdate: 1
+  inputMoveDirection: {x: 0, y: 0, z: 0}
+  inputJump: 0
   movement:
     maxForwardSpeed: 10
     maxSidewaysSpeed: 10
@@ -673,20 +675,57 @@ MonoBehaviour:
     maxAirAcceleration: 20
     gravity: 10
     maxFallSpeed: 20
+    collisionFlags: 0
+    velocity: {x: 0, y: 0, z: 0}
+    frameVelocity: {x: 0, y: 0, z: 0}
+    hitPoint: {x: 0, y: 0, z: 0}
+    lastHitPoint: {x: Infinity, y: 0, z: 0}
   jumping:
     enabled: 1
     baseHeight: 1
     extraHeight: 4.0999999
     perpAmount: 0
     steepPerpAmount: .5
+    jumping: 0
+    holdingJumpButton: 0
+    lastStartTime: 0
+    lastButtonDownTime: -100
+    jumpDir: {x: 0, y: 1, z: 0}
   movingPlatform:
     enabled: 1
     movementTransfer: 2
+    hitPlatform: {fileID: 0}
+    activePlatform: {fileID: 0}
+    activeLocalPoint: {x: 0, y: 0, z: 0}
+    activeGlobalPoint: {x: 0, y: 0, z: 0}
+    activeLocalRotation: {x: 0, y: 0, z: 0, w: 0}
+    activeGlobalRotation: {x: 0, y: 0, z: 0, w: 0}
+    lastMatrix:
+      e00: 0
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 0
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 0
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 0
+    platformVelocity: {x: 0, y: 0, z: 0}
+    newPlatform: 0
   sliding:
     enabled: 1
     slidingSpeed: 15
     sidewaysControl: 1
     speedControl: .400000006
+  grounded: 1
+  groundNormal: {x: 0, y: 0, z: 0}
 --- !u!114 &1124032551
 MonoBehaviour:
   m_ObjectHideFlags: 0
