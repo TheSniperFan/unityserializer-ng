@@ -23,7 +23,7 @@ The issue boiled down to the serializer using binary deserialization at certain 
 * making cheating much easier
 * being considerably slower
 
-I did not want to spend more time fixing an issue with a part of the asset, I never wanted to use in the first place. On the bright side, I was able to delete ~9000 lines of code by removing JSON support. Doing so put a smile on my face, because of how painfully bad the code is documentation of the original Unity Serializer is.
+I did not want to spend more time fixing an issue with a part of the asset, I never wanted to use in the first place. On the bright side, I was able to delete ~9000 lines of code by removing JSON support. Doing so put a smile on my face, because of how painfully bad the documentation of the original code is.
 
 Almost 9000 less lines of code to worry about.
 
