@@ -1,4 +1,10 @@
 using System;
+
+/// <summary>
+/// This class is used to compress metadata that would otherwise inflate the size of the save files.
+/// Instead of serializing the complete type and property information, only the index inside these array
+/// is serialized.
+/// </summary>
 public static partial class PreWarm {
 	
  public static string [] PrewarmNames = new string [] {
@@ -206,6 +212,7 @@ public static partial class PreWarm {
       "worldToLocalMatrix", 
       "localToWorldMatrix", 
       "castShadows", 
+      "shadowCastingMode", 
       "attachedRigidbody", 
       "isTrigger", 
       "NewLine", 
@@ -927,6 +934,7 @@ public static partial class PreWarm {
       "gravity", 
       "sleepVelocity", 
       "sleepAngularVelocity", 
+      "sleepTheshold", 
       "maxAngularVelocity", 
       "solverIterationCount", 
       "mass", 
@@ -2585,6 +2593,7 @@ public static partial class PreWarm {
       "suspensionSpring", 
       "forwardFriction", 
       "sidewaysFriction", 
+      "forceAppPointDistance", 
       "motorTorque", 
       "brakeTorque", 
       "steerAngle", 
@@ -2895,6 +2904,10 @@ public static partial class PreWarm {
       "autoTraverseOffMeshLink", 
       "autoRepath", 
       "hasPath", 
+      "offMesh", 
+      "autoBraking", 
+      "avoidancePriority", 
+      "obstacleAvoidanceType", 
       "pathPending", 
       "isPathStale", 
       "pathStatus", 
@@ -5603,7 +5616,18 @@ public static partial class PreWarm {
       "WaitTimeout", 
       "HashCode", 
       "Array", 
-       "END OF LIST"
+      "firstSelectedGameObject", 
+      "pixelDragThreshold", 
+      "sendNavigationEvents", 
+      "anchoredPosition", 
+      "anchoredPosition3D", 
+      "anchorMax", 
+      "anchorMin", 
+      "offsetMax", 
+      "offsetMin", 
+      "pivot", 
+      "sizeDelta", 
+      "END OF LIST"
      };
 	
  public static string [] PrewarmTypes = new string []  {
@@ -5766,6 +5790,7 @@ public static partial class PreWarm {
       "UnityEngine.RenderTexture, UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
       "UnityEngine.MovieTexture, UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
       "UnityEngine.GL, UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "UnityEngine.Sprite, UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
       "UnityEngine.GUIElement, UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
       "UnityEngine.GUITexture, UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
       "UnityEngine.TextAlignment, UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
@@ -5935,6 +5960,7 @@ public static partial class PreWarm {
       "UnityEngine.UserAuthorization, UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
       "UnityEngine.Behaviour, UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
       "UnityEngine.RenderingPath, UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "UnityEngine.Rendering.ShadowCastingMode, UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
       "UnityEngine.TransparencySortMode, UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
       "UnityEngine.Camera, UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
       "UnityEngine.Debug, UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
@@ -8472,6 +8498,23 @@ public static partial class PreWarm {
       "System.Threading.TimerCallback, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "System.Threading.WaitCallback, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
       "System.Threading.WaitOrTimerCallback, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
-       "END OF LIST"
+      "UnityEngine.EventSystems.EventSystem, UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "UnityEngine.UI.Slider+SliderEvent, UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "UnityEngine.UI.Scrollbar+ScrollEvent, UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "UnityEngine.UI.Toggle+ToggleEvent, UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "UnityEngine.UI.InputField+OnChangeEvent, UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "UnityEngine.UI.InputField+SubmitEvent, UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "UnityEngine.RectTransform, UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "UnityEngine.UI.Button, UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "UnityEngine.UI.Text, UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "UnityEngine.UI.Image, UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "UnityEngine.UI.RawImage, UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "UnityEngine.UI.Slider, UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "UnityEngine.UI.Scrollbar, UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "UnityEngine.UI.Toggle, UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "UnityEngine.UI.InputField, UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "UnityEngine.Canvas, UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "END OF LIST"
      };
 }
