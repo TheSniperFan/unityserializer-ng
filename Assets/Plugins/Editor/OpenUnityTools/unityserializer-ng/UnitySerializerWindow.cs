@@ -684,8 +684,8 @@ public class UnitySerializerWindow : EditorWindow {
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.BeginHorizontal();
             {
-                EditorGUILayout.LabelField("Material count:");
-                EditorGUILayout.LabelField(StoreMaterials.MaterialCount.ToString());
+                EditorGUILayout.LabelField("Shader count:");
+                EditorGUILayout.LabelField(StoreMaterials.ShaderCount.ToString());
             }
             EditorGUILayout.EndHorizontal();
 
@@ -703,7 +703,7 @@ public class UnitySerializerWindow : EditorWindow {
             if (GUILayout.Button("Generate Material database")) {
                 EditorApplication.MarkSceneDirty();
                 if (EditorApplication.SaveCurrentSceneIfUserWantsTo()) {
-                    MaterialDBGenerator.GenerateMaterialDB();
+                    ShaderDBGenerator.GenerateShaderDB();
 
                     AssetDatabase.Refresh();
                 }
