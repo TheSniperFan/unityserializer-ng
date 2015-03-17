@@ -1,64 +1,61 @@
-﻿//using UnityEngine;
-//using UnityEditor;
-//using System.Collections;
-//using System.Collections.Generic;
+﻿using UnityEngine;
+using UnityEditor;
+using System.Collections;
+using System.Collections.Generic;
 
-//[ExecuteInEditMode]
-//[CustomEditor(typeof(StoreMaterials))]
-//public class StoreMaterialsEditor : Editor {
-//    List<bool> show = new List<bool>();
-//    StoreMaterials script;
 
-//    private void Rebuild() {
-//        show.Clear();
+[CustomEditor(typeof(StoreMaterials))]
+public class StoreMaterialsEditor : Editor {
+    List<bool> show = new List<bool>();
+    StoreMaterials script;
 
-//        for (int i = 0; i < script.MaterialProperties.Count + 1; i++)
-//            show.Add(false);
-//    }
+    private void Rebuild() {
+        show.Clear();
 
-//    public override void OnInspectorGUI() {
-//        script = (StoreMaterials)target;
+        for (int i = 0; i < StoreMaterials.MaterialProperties.Count + 1; i++)
+            show.Add(true);
+    }
 
-//        if ((show.Count - 1 - script.MaterialProperties.Count) != 0)
-//            Rebuild();
+    public override void OnInspectorGUI() {
+        script = (StoreMaterials)target;
 
-//        show[0] = EditorGUILayout.Foldout(show[0], "Material properties");
-//        if (show[0]) {
-//            int i = 1;
-//            foreach (string mat in script.MaterialProperties.Keys) {
-//                show[i] = EditorGUILayout.Foldout(show[i], mat);
-//                if (show[i]) {
-//                    foreach (StoreMaterials.MaterialProperty property in script.MaterialProperties[mat]) {
-//                        string type = "";
+        if ((show.Count - 1 - StoreMaterials.MaterialProperties.Count) != 0)
+            Rebuild();
 
-//                        switch ((ShaderUtil.ShaderPropertyType)property.type) {
-//                            case ShaderUtil.ShaderPropertyType.Color:
-//                                type = "COLOR";
-//                                break;
-//                            case ShaderUtil.ShaderPropertyType.Float:
-//                                type = "FLOAT";
-//                                break;
-//                            case ShaderUtil.ShaderPropertyType.Range:
-//                                type = "FLOAT";
-//                                break;
-//                            case ShaderUtil.ShaderPropertyType.TexEnv:
-//                                type = "TEXTURE";
-//                                break;
-//                            case ShaderUtil.ShaderPropertyType.Vector:
-//                                type = "VECTOR";
-//                                break;
-//                        }
+        show[0] = EditorGUILayout.Foldout(show[0], "Material properties");
+        if (show[0]) {
+            if (!EditorApplication.isPlaying) {
+                Renderer renderer = script.GetComponent<Renderer>();
 
-//                        GUILayout.Label("[" + type + "]\t" + property.description);
-//                    }
-//                }
-//                i++;
-//            }
+                foreach (Material mat in renderer.sharedMaterials) {
+                    if (mat) {
+                        if (StoreMaterials.MaterialProperties.ContainsKey(mat.name)) {
+                            GUILayout.Label(mat.name);
+                            foreach (StoreMaterials.MaterialProperty item in StoreMaterials.MaterialProperties[mat.name]) {
+                                GUILayout.Label(item.name);
+                            }
+                        }
+                        else {
+                            EditorGUILayout.HelpBox(string.Format("Material \"{0}\" wasn't found in the material database!\nMake sure you open the Unity Serializer wizard, go to the Materials tab and rebuild it.", mat.name)
+                                , MessageType.Warning);
 
-//            EditorGUILayout.Space();
-//            if (GUILayout.Button("Refresh")) {
-//                script.ForceRefresh();
-//            }
-//        }
-//    }
-//}
+                            if (!StoreMaterials.Dirty) {
+                                StoreMaterials.Dirty = true;
+                            }
+                        }
+                    }
+                }
+            }
+            else {
+                EditorGUILayout.HelpBox("Not available in play mode.", MessageType.Info);
+            }
+
+
+
+            EditorGUILayout.Space();
+            if (GUILayout.Button("Refresh")) {
+                script.SendMessage("OnEnable");
+            }
+        }
+    }
+}

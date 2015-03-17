@@ -5,36 +5,55 @@
 //     ------------------- */
 // 
 using UnityEngine;
+using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 using System;
 using System.Linq;
 using Serialization;
 
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
-
 [AddComponentMenu("Storage/Store Materials")]
 [ExecuteInEditMode]
 [DontStore]
-public class StoreMaterials : MonoBehaviour {
-    public Index<string, List<MaterialProperty>> MaterialProperties = new Index<string, List<MaterialProperty>>();
+public partial class StoreMaterials : MonoBehaviour {
+    public static Index<string, List<MaterialProperty>> MaterialProperties = new Index<string, List<MaterialProperty>>();
     static Index<string, List<MaterialProperty>> cache = new Index<string, List<MaterialProperty>>();
 
-    public enum ShaderPropertyType {
-        Color = 0,
-        Vector = 1,
-        Float = 2,
-        Range = 3,
-        TexEnv = 4,
+    public static bool Dirty {
+        get;
+        set;
+    }
+
+    public static int MaterialCount {
+        get {
+            return MaterialProperties.Count;
+        }
+    }
+
+    public static int PropertyCount {
+        get {
+            int count = 0;
+            foreach (List<MaterialProperty> list in MaterialProperties.Values) {
+                count += list.Count;
+            }
+            return count;
+        }
     }
 
     [Serializable]
     public class MaterialProperty {
+        [Serializable]
+        public enum PropertyType {
+            Color = 0,
+            Vector = 1,
+            Float = 2,
+            Range = 3,
+            TexEnv = 4,
+        }
+
         public string name;
         public string description;
-        public ShaderPropertyType type;
+        public PropertyType type;
     }
 
     public class StoredValue {
@@ -42,11 +61,10 @@ public class StoreMaterials : MonoBehaviour {
         public object value;
     }
 
-
     static StoreMaterials() {
         DelegateSupport.RegisterFunctionType<Texture2D, int>();
         DelegateSupport.RegisterFunctionType<StoreMaterials, List<MaterialProperty>>();
-        DelegateSupport.RegisterFunctionType<MaterialProperty, ShaderPropertyType>();
+        DelegateSupport.RegisterFunctionType<MaterialProperty, ShaderUtil.ShaderPropertyType>();
         DelegateSupport.RegisterFunctionType<MaterialProperty, string>();
         DelegateSupport.RegisterFunctionType<StoredValue, MaterialProperty>();
         DelegateSupport.RegisterFunctionType<StoredValue, object>();
@@ -57,20 +75,21 @@ public class StoreMaterials : MonoBehaviour {
     }
 
     private void OnEnable() {
-        MaterialProperties.Clear();
         cache.Clear();
-        foreach (Material mat in GetComponent<Renderer>().sharedMaterials) {
-            if (!MaterialProperties.ContainsKey(mat.name))
-                MaterialProperties.Add(mat.name, GetShaderProperties(mat));
+
+        if (!StoreMaterials.Dirty) {
+            Renderer renderer = GetComponent<Renderer>();
+            foreach (Material mat in renderer.sharedMaterials) {
+                if (!MaterialProperties.ContainsKey(mat.name)) {
+                    Dirty = true;
+                    break;
+                }
+            }
         }
     }
 
     private void OnDisable() {
         cache.Clear();
-    }
-
-    internal void ForceRefresh() {
-        OnEnable();
     }
 
     public List<StoredValue> GetValues(Material m) {
@@ -82,19 +101,19 @@ public class StoreMaterials : MonoBehaviour {
             };
             output.Add(o);
             switch (p.type) {
-                case ShaderPropertyType.Color:
+                case MaterialProperty.PropertyType.Color:
                     o.value = m.GetColor(p.name);
                     break;
-                case ShaderPropertyType.Float:
+                case MaterialProperty.PropertyType.Float:
                     o.value = m.GetFloat(p.name);
                     break;
-                case ShaderPropertyType.Range:
+                case MaterialProperty.PropertyType.Range:
                     o.value = m.GetFloat(p.name);
                     break;
-                case ShaderPropertyType.TexEnv:
+                case MaterialProperty.PropertyType.TexEnv:
                     o.value = m.GetTexture(p.name);
                     break;
-                case ShaderPropertyType.Vector:
+                case MaterialProperty.PropertyType.Vector:
                     o.value = m.GetVector(p.name);
                     break;
                 default:
@@ -108,19 +127,19 @@ public class StoreMaterials : MonoBehaviour {
     public void SetValues(Material m, IEnumerable<StoredValue> values) {
         foreach (var v in values) {
             switch (v.property.type) {
-                case ShaderPropertyType.Color:
+                case MaterialProperty.PropertyType.Color:
                     m.SetColor(v.property.name, (Color)v.value);
                     break;
-                case ShaderPropertyType.Float:
+                case MaterialProperty.PropertyType.Float:
                     m.SetFloat(v.property.name, (float)v.value);
                     break;
-                case ShaderPropertyType.Range:
+                case MaterialProperty.PropertyType.Range:
                     m.SetFloat(v.property.name, (float)v.value);
                     break;
-                case ShaderPropertyType.TexEnv:
+                case MaterialProperty.PropertyType.TexEnv:
                     m.SetTexture(v.property.name, (Texture)v.value);
                     break;
-                case ShaderPropertyType.Vector:
+                case MaterialProperty.PropertyType.Vector:
                     m.SetVector(v.property.name, (Vector4)v.value);
                     break;
                 default:
@@ -131,23 +150,18 @@ public class StoreMaterials : MonoBehaviour {
     }
 
     public List<MaterialProperty> GetShaderProperties(Material material) {
-        if (cache.ContainsKey(material.shader.name))
+        if (cache.ContainsKey(material.shader.name)) {
             return cache[material.shader.name];
+        }
 
         var list = new List<MaterialProperty>();
-        Shader s = material.shader;
-#if UNITY_EDITOR
-        int count = ShaderUtil.GetPropertyCount(s);
-
-        for (int i = 0; i < count; i++) {
-            list.Add(new MaterialProperty() {
-                type = (ShaderPropertyType)ShaderUtil.GetPropertyType(s, i),
-                description = ShaderUtil.GetPropertyDescription(s, i),
-                name = ShaderUtil.GetPropertyName(s, i)
-            });
+        foreach (KeyValuePair<string, List<MaterialProperty>> material_list in MaterialProperties) {
+            foreach (var m in material_list.Value) {
+                if (material.HasProperty(m.name)) {
+                    list.Add(m);
+                }
+            }
         }
-#endif
-
         cache[material.shader.name] = list;
         return list;
     }
