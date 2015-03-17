@@ -700,7 +700,7 @@ public class UnitySerializerWindow : EditorWindow {
             EditorGUILayout.HelpBox("Make sure that there are no inactive root-objects that are supposed to have their materials stored. This wizard will not be able to discover them automatically!"
                 , MessageType.Warning);
 
-            if (GUILayout.Button("Generate Material database")) {
+            if (GUILayout.Button("Generate shader database")) {
                 EditorApplication.MarkSceneDirty();
                 if (EditorApplication.SaveCurrentSceneIfUserWantsTo()) {
                     ShaderDBGenerator.GenerateShaderDB();
