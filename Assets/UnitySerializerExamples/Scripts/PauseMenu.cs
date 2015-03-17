@@ -10,6 +10,8 @@ public class PauseMenu : MonoBehaviour {
     private GUITexture pausedGUI;
     [SerializeField]
     private string gameName = "Your Game";
+    [SerializeField]
+    private static bool logProgress = false;
 
     private List<Transform> myList = new List<Transform>();
 
@@ -86,6 +88,8 @@ public class PauseMenu : MonoBehaviour {
     }
 
     private static void HandleLevelSerializerProgress(string section, float complete) {
-        Debug.Log(string.Format("Progress on {0} = {1:0.00%}", section, complete));
+        if (logProgress) {
+            Debug.Log(string.Format("Progress on {0} = {1:0.00%}", section, complete));
+        }
     }
 }
