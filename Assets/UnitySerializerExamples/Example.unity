@@ -13,7 +13,7 @@ SceneSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 4
+  serializedVersion: 6
   m_Fog: 0
   m_FogColor: {r: .5, g: .5, b: .5, a: 1}
   m_FogMode: 3
@@ -23,63 +23,7 @@ RenderSettings:
   m_AmbientSkyColor: {r: .200000003, g: .200000003, b: .200000003, a: 1}
   m_AmbientEquatorColor: {r: .200000003, g: .200000003, b: .200000003, a: 1}
   m_AmbientGroundColor: {r: .200000003, g: .200000003, b: .200000003, a: 1}
-  m_AmbientSkyboxAmount: .43900001
-  m_AmbientProbe:
-    sh[ 0]: .171622559
-    sh[ 1]: -.0214514062
-    sh[ 2]: -.0071199201
-    sh[ 3]: -.00802136213
-    sh[ 4]: .00230947416
-    sh[ 5]: .00781441107
-    sh[ 6]: .0106489146
-    sh[ 7]: .0177576449
-    sh[ 8]: .0270087868
-    sh[ 9]: .215413585
-    sh[10]: -.028094139
-    sh[11]: -.0116569772
-    sh[12]: -.0133037642
-    sh[13]: .0037950566
-    sh[14]: .0131383818
-    sh[15]: .0154870506
-    sh[16]: .027011849
-    sh[17]: .0389057845
-    sh[18]: .291046947
-    sh[19]: -.0380298831
-    sh[20]: -.0203459412
-    sh[21]: -.0243297406
-    sh[22]: .00670838077
-    sh[23]: .025155291
-    sh[24]: .0198470559
-    sh[25]: .039476037
-    sh[26]: .0482746698
-  m_AmbientProbeInGamma:
-    sh[ 0]: .425788015
-    sh[ 1]: -.0323563293
-    sh[ 2]: -.00684417784
-    sh[ 3]: -.0102451053
-    sh[ 4]: .00196295418
-    sh[ 5]: .0120049622
-    sh[ 6]: .0112145022
-    sh[ 7]: .0143888788
-    sh[ 8]: .0294392332
-    sh[ 9]: .464232177
-    sh[10]: -.0313284472
-    sh[11]: -.00854799151
-    sh[12]: -.0129159279
-    sh[13]: .00242268061
-    sh[14]: .0151906861
-    sh[15]: .0131927114
-    sh[16]: .0174164958
-    sh[17]: .03446538
-    sh[18]: .522565186
-    sh[19]: -.0266480558
-    sh[20]: -.0110528618
-    sh[21]: -.0171380043
-    sh[22]: .00305464165
-    sh[23]: .0203760043
-    sh[24]: .0139103867
-    sh[25]: .0209379736
-    sh[26]: .0355068184
+  m_AmbientIntensity: .43900001
   m_AmbientMode: 0
   m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
   m_HaloStrength: .5
@@ -92,7 +36,6 @@ RenderSettings:
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
-  m_GeneratedSkyboxReflection: {fileID: 0}
   m_Sun: {fileID: 825867482}
 --- !u!127 &3
 LevelGameManager:
@@ -100,17 +43,15 @@ LevelGameManager:
 --- !u!157 &4
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 4
-  m_LightProbesLegacy: {fileID: 0}
+  serializedVersion: 5
   m_GIWorkflowMode: 0
-  m_LightmapsModeLegacy: 1
   m_LightmapsMode: 1
-  m_UseDualLightmapsInForward: 0
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
     m_IndirectOutputScale: 1
     m_AlbedoBoost: 1
+    m_TemporalCoherenceThreshold: 1
     m_EnvironmentLightingMode: 0
     m_EnableBakedLightmaps: 1
     m_EnableRealtimeLightmaps: 1
@@ -118,28 +59,15 @@ LightmapSettings:
     serializedVersion: 3
     m_Resolution: 1
     m_BakeResolution: 50
-    m_LastUsedResolution: 0
     m_TextureWidth: 1024
     m_TextureHeight: 1024
-    m_BounceBoost: 1
-    m_BounceIntensity: 1
-    m_SkyLightColor: {r: .860000014, g: .930000007, b: 1, a: 1}
-    m_SkyLightIntensity: 0
-    m_Quality: 0
-    m_Bounces: 1
-    m_FinalGatherRays: 1000
-    m_FinalGatherContrastThreshold: .0500000007
-    m_FinalGatherGradientThreshold: 0
-    m_FinalGatherInterpolationPoints: 15
-    m_AOAmount: 0
     m_AOMaxDistance: 1
-    m_AOContrast: 1
-    m_LODSurfaceMappingDistance: 1
     m_Padding: 2
     m_CompAOExponent: 1
     m_LightmapParameters: {fileID: 0}
     m_TextureCompression: 0
-    m_LockAtlas: 0
+    m_FinalGather: 0
+    m_FinalGatherRayCount: 1024
   m_LightmapSnapshot: {fileID: 112000000, guid: 1cd8d2d111c97d943be0e1c07f099e72,
     type: 2}
   m_RuntimeCPUUsage: 25
@@ -340,10 +268,10 @@ Light:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 825867480}
   m_Enabled: 1
-  serializedVersion: 5
+  serializedVersion: 6
   m_Type: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: .25999999
+  m_Intensity: .519999981
   m_Range: 10
   m_SpotAngle: 30
   m_CookieSize: 10
@@ -353,11 +281,8 @@ Light:
     m_Strength: 1
     m_Bias: .0500000007
     m_NormalBias: 0
-    m_Softness: 4
-    m_SoftnessFade: 1
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
-  m_ActuallyLightmapped: 1
   m_Flare: {fileID: 0}
   m_RenderMode: 0
   m_CullingMask:
@@ -498,10 +423,6 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_LightmapIndex: 255
-  m_LightmapIndexDynamic: 255
-  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
-  m_LightmapTilingOffsetDynamic: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
   - {fileID: 2100000, guid: 040cb578f791c694cbe501e9edfc9292, type: 2}
   m_SubsetIndices: 
@@ -804,10 +725,6 @@ MeshRenderer:
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_LightmapIndex: 0
-  m_LightmapIndexDynamic: 0
-  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
-  m_LightmapTilingOffsetDynamic: {x: .9921875, y: .9921875, z: 0, w: 0}
   m_Materials:
   - {fileID: 2100000, guid: 978b311b48b934d51947aae4a00b26c7, type: 2}
   m_SubsetIndices: 

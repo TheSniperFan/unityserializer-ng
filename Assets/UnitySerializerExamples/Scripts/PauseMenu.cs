@@ -10,6 +10,8 @@ public class PauseMenu : MonoBehaviour {
     private GUITexture pausedGUI;
     [SerializeField]
     private string gameName = "Your Game";
+    [SerializeField]
+    private static bool logProgress = false;
 
     private List<Transform> myList = new List<Transform>();
 
@@ -68,14 +70,18 @@ public class PauseMenu : MonoBehaviour {
         if (GUILayout.Button("Save Game")) {
             DateTime t = DateTime.Now;
             LevelSerializer.SaveGame(gameName);
-            Debug.Log(string.Format("Saved in: {0:0.000} seconds", (DateTime.Now - t).TotalSeconds));
+            if (logProgress) {
+                Debug.Log(string.Format("Saved in: {0:0.000} seconds", (DateTime.Now - t).TotalSeconds));
+            }
         }
         GUILayout.Space(60.0f);
         foreach (LevelSerializer.SaveEntry sg in LevelSerializer.SavedGames[LevelSerializer.PlayerName]) {
             if (GUILayout.Button(sg.Caption)) {
                 DateTime t = DateTime.Now;
                 LevelSerializer.LoadNow(sg.Data);
-                Debug.Log(string.Format("Loaded in: {0:0.000} seconds", (DateTime.Now - t).TotalSeconds));
+                if (logProgress) {
+                    Debug.Log(string.Format("Loaded in: {0:0.000} seconds", (DateTime.Now - t).TotalSeconds));
+                }
                 Time.timeScale = 1.0f;
                 Time.fixedDeltaTime = Time.timeScale * 0.02f;
             }
@@ -86,6 +92,8 @@ public class PauseMenu : MonoBehaviour {
     }
 
     private static void HandleLevelSerializerProgress(string section, float complete) {
-        Debug.Log(string.Format("Progress on {0} = {1:0.00%}", section, complete));
+        if (logProgress) {
+            Debug.Log(string.Format("Progress on {0} = {1:0.00%}", section, complete));
+        }
     }
 }

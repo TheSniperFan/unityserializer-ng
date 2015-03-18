@@ -42,6 +42,7 @@ public class UnitySerializerWindow : EditorWindow {
     static bool showReferences = false;
     static bool showMain = true;
     static bool showRoom = false;
+    static bool showMaterials = false;
     static float width;
 
     static void DrawThing(int id, Rect area) {
@@ -195,12 +196,21 @@ public class UnitySerializerWindow : EditorWindow {
                 showMain = true;
                 showReferences = false;
                 showRoom = false;
+                showMaterials = false;
+            }
+
+            if (GUILayout.Toggle(showMaterials, "Materials", "toolbarbutton", GUILayout.ExpandWidth(false))) {
+                showMain = false;
+                showReferences = false;
+                showRoom = false;
+                showMaterials = true;
             }
 
             if (GUILayout.Toggle(showRoom, "Rooms", "toolbarbutton", GUILayout.ExpandWidth(false))) {
                 showMain = false;
                 showRoom = true;
                 showReferences = false;
+                showMaterials = false;
             }
             if (_assetStore.SelectMany(s => s.Value).All(s => s.Value.Count <= 1)) {
                 GUI.color = Color.white;
@@ -214,6 +224,7 @@ public class UnitySerializerWindow : EditorWindow {
                 showMain = false;
                 showRoom = false;
                 showReferences = true;
+                showMaterials = false;
             }
             GUILayout.Label("", "toolbarbutton");
             GUI.color = Color.white;
@@ -449,7 +460,7 @@ public class UnitySerializerWindow : EditorWindow {
                 }
             }
             GUILayout.FlexibleSpace();
-            if(GameObject.FindObjectsOfType<SaveGameManager>().Length == 0) {
+            if (GameObject.FindObjectsOfType<SaveGameManager>().Length == 0) {
                 GUI.color = new Color(1, 0.6f, 0.6f, 1f);
                 var style = new GUIStyle("label");
                 style.wordWrap = true;
@@ -506,7 +517,7 @@ public class UnitySerializerWindow : EditorWindow {
         if (showRoom) {
             GUILayout.BeginVertical();
             if (GameObject.FindObjectOfType<Room>()) {
-                
+
                 if (Selection.gameObjects.Length == 1) {
                     if (Selection.activeGameObject != null) {
                         GUILayout.Space(8);
@@ -608,7 +619,7 @@ public class UnitySerializerWindow : EditorWindow {
                         }
                     }
                 }
-            }   
+            }
             else {
                 GUI.color = new Color(1, 0.6f, 0.6f, 1f);
                 var style = new GUIStyle("label");
@@ -659,6 +670,46 @@ public class UnitySerializerWindow : EditorWindow {
             }
             GUILayout.Space(4);
             GUILayout.EndVertical();
+        }
+
+        if (showMaterials) {
+            EditorGUILayout.BeginHorizontal();
+            {
+                EditorGUILayout.LabelField("Current status:");
+                Color c = GUI.color;
+                GUI.color = StoreMaterials.Dirty ? Color.red : Color.green;
+                EditorGUILayout.LabelField(StoreMaterials.Dirty ? "Dirty" : "Clean", EditorStyles.boldLabel);
+                GUI.color = c;
+            }
+            EditorGUILayout.EndHorizontal();
+            EditorGUILayout.BeginHorizontal();
+            {
+                EditorGUILayout.LabelField("Shader count:");
+                EditorGUILayout.LabelField(StoreMaterials.ShaderCount.ToString());
+            }
+            EditorGUILayout.EndHorizontal();
+
+            EditorGUILayout.BeginHorizontal();
+            {
+                EditorGUILayout.LabelField("Property count:");
+                EditorGUILayout.LabelField(StoreMaterials.PropertyCount.ToString());
+            }
+            EditorGUILayout.EndHorizontal();
+
+
+            EditorGUILayout.HelpBox("Make sure that there are no inactive root-objects that are supposed to have their materials stored. This wizard will not be able to discover them automatically!"
+                , MessageType.Warning);
+
+            if (GUILayout.Button("Generate shader database")) {
+                EditorApplication.MarkSceneDirty();
+                if (EditorApplication.SaveCurrentSceneIfUserWantsTo()) {
+                    ShaderDBGenerator.GenerateShaderDB();
+
+                    AssetDatabase.Refresh();
+                }
+
+                StoreMaterials.Dirty = false;
+            }
         }
         Repaint();
     }
