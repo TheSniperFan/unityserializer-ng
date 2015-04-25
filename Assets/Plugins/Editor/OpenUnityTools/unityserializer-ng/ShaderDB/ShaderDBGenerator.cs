@@ -72,16 +72,23 @@ type = $PROPTYPE
         EditorApplication.OpenScene(currentScene);
         currentScene = null;
 
-        string code = string.Empty;
+        GenerateCode();
+    }
 
-        code = GenerateClass(code);
-        code = GenerateShaders(code);
+    /// <summary>
+    /// Generates the shader database for all shaders inside the "Asset" directory
+    /// Ignores files in folders called "Editor"
+    /// </summary>
+    public static void GenerateFullShaderDB() {
+        string[] shaderFiles = Directory.GetFiles("Assets", "*.shader", SearchOption.AllDirectories);
 
-        foreach (KeyValuePair<string, List<ShaderProperty>> item in tmp_database) {
-            code = GenerateProperties(code, item.Key);
+        foreach (var item in shaderFiles) {
+            if (!item.Contains("\\Editor\\")) {
+                AddShader(Resources.LoadAssetAtPath<Shader>(item));
+            }
         }
 
-        WriteDatabase(code);
+        GenerateCode();
     }
 
     /// <summary>
@@ -102,26 +109,51 @@ type = $PROPTYPE
             Material[] m2 = (from obj in go.GetComponentsInChildren<StoreMaterials>(true)
                              select obj.GetComponent<Renderer>().sharedMaterials).SelectMany(obj => obj).ToArray();
             foreach (Material mat in m2) {
-                Shader currentShader = mat.shader;
-                int propertyCount = ShaderUtil.GetPropertyCount(currentShader);
-
-                List<ShaderProperty> properties = new List<ShaderProperty>();
-
-                for (int i = 0; i < propertyCount; i++) {
-                    properties.Add(new ShaderProperty {
-                        name = ShaderUtil.GetPropertyName(currentShader, i),
-                        type = ShaderUtil.GetPropertyType(currentShader, i)
-                    });
-                }
-
-                if (tmp_database.ContainsKey(currentShader.name)) {
-                    tmp_database[currentShader.name] = properties.Union(tmp_database[currentShader.name]).ToList();
-                }
-                else {
-                    tmp_database[currentShader.name] = properties;
-                }
+                AddShader(mat.shader);
             }
         }
+    }
+
+    /// <summary>
+    /// Adds a shader to the shader list
+    /// </summary>
+    /// <param name="s">The shader to add</param>
+    private static void AddShader(Shader s) {
+        int propertyCount = ShaderUtil.GetPropertyCount(s);
+
+        if (propertyCount > 0) {
+            List<ShaderProperty> properties = new List<ShaderProperty>();
+
+            for (int i = 0; i < propertyCount; i++) {
+                properties.Add(new ShaderProperty {
+                    name = ShaderUtil.GetPropertyName(s, i),
+                    type = ShaderUtil.GetPropertyType(s, i)
+                });
+            }
+
+            if (tmp_database.ContainsKey(s.name)) {
+                tmp_database[s.name] = properties.Union(tmp_database[s.name]).ToList();
+            }
+            else {
+                tmp_database[s.name] = properties;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Runs the code generator and writes the final result to the disk
+    /// </summary>
+    private static void GenerateCode() {
+        string code = string.Empty;
+
+        code = GenerateClass(code);
+        code = GenerateShaders(code);
+
+        foreach (KeyValuePair<string, List<ShaderProperty>> item in tmp_database) {
+            code = GenerateProperties(code, item.Key);
+        }
+
+        WriteDatabase(code);
     }
 
     /// <summary>

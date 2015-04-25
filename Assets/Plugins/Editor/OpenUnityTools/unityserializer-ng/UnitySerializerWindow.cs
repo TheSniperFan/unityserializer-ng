@@ -697,10 +697,10 @@ public class UnitySerializerWindow : EditorWindow {
             EditorGUILayout.EndHorizontal();
 
 
-            EditorGUILayout.HelpBox("Make sure that there are no inactive root-objects that are supposed to have their materials stored. This wizard will not be able to discover them automatically!"
+            EditorGUILayout.HelpBox("Make sure that there are no inactive root-objects that are supposed to have their materials stored when using minimal generation. This wizard will not be able to discover them!"
                 , MessageType.Warning);
 
-            if (GUILayout.Button("Generate shader database")) {
+            if (GUILayout.Button("Generate minimal")) {
                 EditorApplication.MarkSceneDirty();
                 if (EditorApplication.SaveCurrentSceneIfUserWantsTo()) {
                     ShaderDBGenerator.GenerateShaderDB();
@@ -710,6 +710,18 @@ public class UnitySerializerWindow : EditorWindow {
 
                 StoreMaterials.Dirty = false;
             }
+
+            EditorGUILayout.Space();
+            EditorGUILayout.HelpBox("Make sure that you have added the builtin shaders for your Unity version when using full generation. They can be found on the Unity website."
+                , MessageType.Warning);
+
+            if (GUILayout.Button("Generate full (slow!)")) {
+                    ShaderDBGenerator.GenerateFullShaderDB();
+                    AssetDatabase.Refresh();
+
+                    StoreMaterials.Dirty = false;
+            }
+
         }
         Repaint();
     }
