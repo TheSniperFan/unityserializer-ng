@@ -22,5 +22,16 @@
 /*.pidb
 /*.booproj
 
+#Builtin shaders
+[Aa]ssets/Editor/
+[Aa]ssets/Editor.meta
+[Aa]ssets/Editor/DefaultResourcesExtra/
+[Aa]ssets/Editor/DefaultResourcesExtra.meta
+[Aa]ssets/Editor/DefaultResources/
+[Aa]ssets/Editor/DefaultResources.meta
+[Aa]ssets/Editor/CGIncludes/
+[Aa]ssets/Editor/CGIncludes.meta
+
+
 #Unity3D Generated File On Crash Reports
 sysinfo.txt
