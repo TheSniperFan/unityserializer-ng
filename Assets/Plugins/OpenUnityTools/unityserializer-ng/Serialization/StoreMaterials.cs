@@ -84,7 +84,7 @@ public partial class StoreMaterials : MonoBehaviour {
     /// </summary>
     public class StoredValue {
         public MaterialProperty property;
-        public object value;
+        public object[] value;
     }
 
     static StoreMaterials() {
@@ -135,19 +135,26 @@ public partial class StoreMaterials : MonoBehaviour {
             output.Add(o);
             switch (p.type) {
                 case MaterialProperty.PropertyType.Color:
-                    o.value = m.GetColor(p.name);
+                    o.value = new object[1];
+                    o.value[0] = m.GetColor(p.name);
                     break;
                 case MaterialProperty.PropertyType.Float:
-                    o.value = m.GetFloat(p.name);
+                    o.value = new object[1];
+                    o.value[0] = m.GetFloat(p.name);
                     break;
                 case MaterialProperty.PropertyType.Range:
-                    o.value = m.GetFloat(p.name);
+                    o.value = new object[1];
+                    o.value[0] = m.GetFloat(p.name);
                     break;
                 case MaterialProperty.PropertyType.TexEnv:
-                    o.value = m.GetTexture(p.name);
+                    o.value = new object[3];
+                    o.value[0] = m.GetTexture(p.name);
+                    o.value[1] = m.GetTextureOffset(p.name);
+                    o.value[2] = m.GetTextureScale(p.name);
                     break;
                 case MaterialProperty.PropertyType.Vector:
-                    o.value = m.GetVector(p.name);
+                    o.value = new object[1];
+                    o.value[0] = m.GetVector(p.name);
                     break;
                 default:
                     Debug.LogError("Unsupported type: " + p.type.ToString());
@@ -166,19 +173,22 @@ public partial class StoreMaterials : MonoBehaviour {
         foreach (var v in values) {
             switch (v.property.type) {
                 case MaterialProperty.PropertyType.Color:
-                    m.SetColor(v.property.name, (Color)v.value);
+                    m.SetColor(v.property.name, (Color)v.value[0]);
+                    Debug.Log(v.property.name);
                     break;
                 case MaterialProperty.PropertyType.Float:
-                    m.SetFloat(v.property.name, (float)v.value);
+                    m.SetFloat(v.property.name, (float)v.value[0]);
                     break;
                 case MaterialProperty.PropertyType.Range:
-                    m.SetFloat(v.property.name, (float)v.value);
+                    m.SetFloat(v.property.name, (float)v.value[0]);
                     break;
                 case MaterialProperty.PropertyType.TexEnv:
-                    m.SetTexture(v.property.name, (Texture)v.value);
+                    m.SetTexture(v.property.name, (Texture)v.value[0]);
+                    m.SetTextureOffset(v.property.name, (Vector2)v.value[1]);
+                    m.SetTextureScale(v.property.name, (Vector2)v.value[2]);
                     break;
                 case MaterialProperty.PropertyType.Vector:
-                    m.SetVector(v.property.name, (Vector4)v.value);
+                    m.SetVector(v.property.name, (Vector4)v.value[0]);
                     break;
                 default:
                     Debug.LogError("Unsupported type: " + v.property.type.ToString());
