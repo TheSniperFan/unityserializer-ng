@@ -451,8 +451,8 @@ public class LevelLoader : MonoBehaviour
 					}
 				}
 			
-			
-			UnitySerializer.RunDeferredActions(process, 2, false);
+			// WTFM?
+            // UnitySerializer.RunDeferredActions(process, 2, false);
             
             Time.fixedDeltaTime = oldFixedTime;
 			Time.timeScale = 1;
