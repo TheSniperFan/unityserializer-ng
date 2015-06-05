@@ -16,9 +16,13 @@ If it does not, please make sure you have **followed all the instructions up to 
 
 ### Writing your own save/load script
 If you need more functionality than the example scripts provide, this is a basic list of commands you can execute to intergrate UnitySerializer-NG functionality into your own scripts.
+
 `LevelSerializer.SaveGame(Name of save file);` - Save your game.
+
 `LevelSerializer.LoadNow(Data);` - Load a save file. Requests savefile data, you will have to use a foreach with the type LevelSerializer.SaveEntry.
+
 `LevelSerializer.SavedGames[LevelSerializer.PlayerName]` - Returns a list of saved games. Best used in a foreach loop.
+
 `LevelSerializer.IsDeserializing` - Returns true when a level is loading. Best used when waiting for a level to finish loading, so that a function can continue.
 
 ### Additional Notes
