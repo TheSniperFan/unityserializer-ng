@@ -1,10 +1,10 @@
-## Using Unity Serialiser NG
+## Using unityserializer-ng
 
 ### Installation
 Install US-NG by importing it as a package, or by dragging the folder into the project window. Unity should import all of the assets.
 
 ### Basic Usage
-US-NG has a configuration window under Window>Unity Serialiser>Wizard. Dock that or leave it floating. Once you've done that, it'll ask you to create a 'Save Game Manager'. Do so by clicking on the create button.
+US-NG has a configuration window under `Window/Unity Serialiser/Wizard`. Dock that or leave it floating. Once you've done that, it'll ask you to create a 'Save Game Manager'. Do so by clicking on the create button.
 Once done, select a GameObject from your Hierarchy. To store variables and other data (such as position), click on 'Store Information'. You can also save the material or mesh by clicking on the respective buttons afterwards.
 You can now implement an example script or write your own.
 
@@ -15,7 +15,7 @@ Once you have done that, restart play mode. You should notice that your cube has
 If it does not, please make sure you have **followed all the instructions up to here**. This tutorial was followed as it was being written and the author had no issue with the steps.
 
 ### Writing your own save/load script
-If you need more functionality than the example scripts provide, this is a basic list of commands you can execute to intergrate UnitySerializer-NG functionality into your own scripts.
+If you need more functionality than the example scripts provide, this is a basic list of commands you can execute to intergrate unityserializer-ng functionality into your own scripts.
 
 `LevelSerializer.SaveGame(Name of save file);` - Save your game.
 
@@ -26,4 +26,4 @@ If you need more functionality than the example scripts provide, this is a basic
 `LevelSerializer.IsDeserializing` - Returns true when a level is loading. Best used when waiting for a level to finish loading, so that a function can continue.
 
 ### Additional Notes
-It's been a while since I've used this, so excuse any problems. If requested, I will add more detail to this tutorial, including more advanced functionality.
+It's been a while since I [(lobby417)](https://github.com/lobby417) have used this, so excuse any problems. If requested, I will add more detail to this tutorial, including more advanced functionality.
