@@ -84,7 +84,7 @@ type = $PROPTYPE
 
         foreach (var item in shaderFiles) {
             if (!item.Contains("\\Editor\\")) {
-                AddShader(Resources.LoadAssetAtPath<Shader>(item));
+                AddShader(AssetDatabase.LoadAssetAtPath<Shader>(item));
             }
         }
 
