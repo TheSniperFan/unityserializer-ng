@@ -86,13 +86,6 @@ public class LevelLoader : MonoBehaviour
     private static void SetActive(GameObject go, bool activate)
     {
         go.SetActive(activate);
-        foreach (var c in go.transform.Cast<Transform>())
-        {
-            if (c.GetComponent<StoreInformation>() == null)
-            {
-                SetActive(c.gameObject, activate);
-            }
-        }
     }
 
     public IEnumerator Load()
