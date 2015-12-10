@@ -5,11 +5,8 @@
 //     ------------------- */
 // 
 using UnityEngine;
-using System.Collections;
+using UnityEngine.SceneManagement;
 using System.Collections.Generic;
-using System;
-using System.Linq;
-using Serialization;
 
 public class RoomManager
 {
@@ -21,7 +18,7 @@ public class RoomManager
 	public static void SaveCurrentRoom()
 	{
 		savingRoom = true;
-		rooms[Application.loadedLevelName] = LevelSerializer.SerializeLevel();
+		rooms[SceneManager.GetActiveScene().name] = LevelSerializer.SerializeLevel();
 		savingRoom = false;
 	}
 	
@@ -50,7 +47,7 @@ public class RoomManager
 		{
 			var go = new GameObject("RoomLoader");
 			go.AddComponent<RoomLoader>();
-			Application.LoadLevel(name);
+            SceneManager.LoadScene(name, LoadSceneMode.Single);
 		}
 	}
 	
