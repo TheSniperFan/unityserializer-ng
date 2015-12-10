@@ -316,8 +316,6 @@ public class CharacterMotor : MonoBehaviour {
         if (movingPlatform.enabled) {
             if (movingPlatform.activePlatform != null) {
                 if (!movingPlatform.newPlatform) {
-                    Vector3 lastVelocity = movingPlatform.platformVelocity;
-
                     movingPlatform.platformVelocity = (
                         movingPlatform.activePlatform.localToWorldMatrix.MultiplyPoint3x4(movingPlatform.activeLocalPoint)
                         - movingPlatform.lastMatrix.MultiplyPoint3x4(movingPlatform.activeLocalPoint)
