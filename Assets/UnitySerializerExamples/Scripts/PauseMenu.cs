@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using System;
-using System.Collections.Generic;
 
 public class PauseMenu : MonoBehaviour {
     [SerializeField]
@@ -12,8 +10,6 @@ public class PauseMenu : MonoBehaviour {
     private string gameName = "Your Game";
     [SerializeField]
     private static bool logProgress = false;
-
-    private List<Transform> myList = new List<Transform>();
 
 
     private void Start() {

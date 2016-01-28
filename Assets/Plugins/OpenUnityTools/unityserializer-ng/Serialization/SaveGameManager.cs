@@ -5,7 +5,7 @@
 //     ------------------- */
 // 
 using UnityEngine;
-using System.Collections;
+using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using System;
 using System.Linq;
@@ -102,6 +102,7 @@ public class SaveGameManager : MonoBehaviour
 		var entry = Instance.Reference[gameObject];
 		if(entry != null)
 			return entry.Id;
+        // TODO: Keep an eye on this. Application.isLoadingLevel was deprecated without any equivalent replacement. It still works though, so I won't touch it for now.
 		if(Application.isLoadingLevel && !Application.isPlaying)
 		{
 			return null;

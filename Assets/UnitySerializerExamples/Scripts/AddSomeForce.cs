@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 
 public class AddSomeForce : MonoBehaviour {
     private bool done;
@@ -8,16 +7,15 @@ public class AddSomeForce : MonoBehaviour {
     private Transform aChild;
 
     private void Awake() {
-        aChild = GetComponentsInChildren<Transform>()[0];
+        aChild = GetComponentsInChildren<Transform>()[Random.Range(0, transform.childCount)];
     }
 
     private void FixedUpdate() {
-        if (done)
+        if (done) {
             return;
+        }
         done = true;
         GetComponent<Rigidbody>().angularVelocity = Random.insideUnitSphere * 10.0f;
-
+        aChild.GetComponent<Rigidbody>().angularVelocity = Random.insideUnitSphere * 10.0f;
     }
-
-
 }

@@ -1,11 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections;
 
 public class Movement : MonoBehaviour {
     private CharacterController controller;
-
-    [SerializeField]
-    private Texture2D texture;
 
     private Vector3 moveDirection = Vector3.zero;
     private Vector3 forward = Vector3.zero;
@@ -13,7 +9,6 @@ public class Movement : MonoBehaviour {
 
     private void Start() {
         controller = GetComponent<CharacterController>();
-        texture = null;
     }
 
     private void Update() {

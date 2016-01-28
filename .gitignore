@@ -6,7 +6,7 @@
 
 # Additional folders
 [Aa]ssets/Test/
-[Aa]ssets/UnityVS/
+.vs/
 
 # Additional files
 [Aa]ssets/Test.meta

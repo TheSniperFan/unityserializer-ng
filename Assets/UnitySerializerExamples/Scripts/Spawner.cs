@@ -16,9 +16,6 @@ public class Spawner : MonoBehaviour {
     [SerializeField]
     private Mesh createMesh;
 
-    [SerializeField]
-    private string[] testArrayItems = new string[10];
-
 
     private void Update() {
         if (LevelSerializer.IsDeserializing)

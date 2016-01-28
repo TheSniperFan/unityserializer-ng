@@ -10,13 +10,13 @@
 //#define US_LOGGING
 
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using System;
 using System.Linq;
 using System.Collections.Generic;
 using Serialization;
 using System.Reflection;
-using System.IO.Compression;
 using System.IO;
 using Object = UnityEngine.Object;
 using System.Net;
@@ -632,7 +632,7 @@ public static class LevelSerializer
                    {
                        Name = name,
                        When = DateTime.Now,
-                       Level = Application.loadedLevelName,
+                       Level = SceneManager.GetActiveScene().name,
                        Data = SerializeLevel(urgent)
                    };
     }
@@ -903,7 +903,7 @@ public static class LevelSerializer
                 ld = new LevelData()
                          {
                              //The level to reload
-                             Name = Application.loadedLevelName,
+                             Name = SceneManager.GetActiveScene().name,
 					         rootObject = string.IsNullOrEmpty(id) ? null : id
 					   
                          };
@@ -1181,7 +1181,7 @@ public static class LevelSerializer
         var loader = go.AddComponent<LevelLoader>();
         loader.Data = ld;
 
-        Application.LoadLevel(ld.Name);
+        SceneManager.LoadScene(ld.Name);
         return loader;
     }
 

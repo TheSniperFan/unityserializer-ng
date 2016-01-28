@@ -5,13 +5,13 @@
 //     ------------------- */
 // 
 using UnityEngine;
-using System.Collections;
 using System;
 using System.Linq;
 using System.Collections.Generic;
 
 #if UNITY_EDITOR
 using UnityEditor;
+using UnityEditor.SceneManagement;
 
 [InitializeOnLoad]
 public class UnitySerializerWindow : EditorWindow {
@@ -701,8 +701,8 @@ public class UnitySerializerWindow : EditorWindow {
                 , MessageType.Warning);
 
             if (GUILayout.Button("Generate minimal")) {
-                EditorApplication.MarkSceneDirty();
-                if (EditorApplication.SaveCurrentSceneIfUserWantsTo()) {
+                EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
+                if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) {
                     ShaderDBGenerator.GenerateShaderDB();
 
                     AssetDatabase.Refresh();
@@ -748,7 +748,7 @@ public class UnitySerializerWindow : EditorWindow {
             stopWhenReady--;
             if (stopWhenReady == 0) {
                 EditorApplication.isPlaying = false;
-                EditorApplication.SaveScene();
+                EditorSceneManager.SaveScene(EditorSceneManager.GetActiveScene());
             }
         }
     }
