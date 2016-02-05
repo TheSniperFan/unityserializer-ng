@@ -220,35 +220,68 @@ public static class LevelSerializer
 		x.Close();
 		LoadObjectTree(data, onComplete);
 	}
-	
-	/// <summary>
-	/// Serializes the level to a file beneath Application.persistentDataPath
-	/// </summary>
-	/// <param name='filename'>
-	/// The filename to use
-	/// </param>
-	public static void SerializeLevelToFile(string filename)
-	{
-		var data = SerializeLevel();
-		data.WriteToFile(Application.persistentDataPath + "/" + filename);
-	}
-	
-	/// <summary>
-	/// Loads a level from a file within Application.persistentDataPath
-	/// </summary>
-	/// <param name='filename'>
-	/// The filename to use
-	/// </param>
-	public static void LoadSavedLevelFromFile(string filename)
-	{
-		var x = File.OpenText(Application.persistentDataPath + "/" + filename);
-		var data = x.ReadToEnd();
-		x.Close();
-		LoadSavedLevel(data);
-	
-	}
-	
-	static readonly object Guard = new object();
+
+    /// <summary>
+    /// Serializes the level to a file
+    /// </summary>
+    /// <param name='filename'>
+    /// The filename to use
+    /// </param>
+    /// <param name="usePersistentDataPath">
+    /// Is filename just a filename in Application.persistentDataPath or a whole path?
+    /// </param>
+    public static void SerializeLevelToFile(string filename, bool usePersistentDataPath = true) {
+        var data = SerializeLevel();
+        if (usePersistentDataPath) {
+            data.WriteToFile(Application.persistentDataPath + "/" + filename);
+        }
+        else {
+            if (Uri.IsWellFormedUriString(filename, UriKind.RelativeOrAbsolute)) {
+                data.WriteToFile(filename);
+            }
+            else {
+                Debug.LogErrorFormat("ERROR: {0} cannot be open for saving!", filename);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Loads a level from a file
+    /// </summary>
+    /// <param name='filename'>
+    /// The filename to use
+    /// </param>
+    /// <param name="usePersistentDataPath">
+    /// Is filename just a filename in Application.persistentDataPath or a whole path?
+    /// </param>
+    public static void LoadSavedLevelFromFile(string filename, bool usePersistentDataPath = true) {
+        StreamReader reader;
+        string data = null;
+        if (usePersistentDataPath) {
+            reader = File.OpenText(Application.persistentDataPath + "/" + filename);
+            data = reader.ReadToEnd();
+            reader.Close();
+        }
+        else {
+            if (Uri.IsWellFormedUriString(filename, UriKind.RelativeOrAbsolute)) {
+                reader = File.OpenText(filename);
+                data = reader.ReadToEnd();
+                reader.Close();
+            }
+            else {
+                Debug.LogErrorFormat("ERROR: {0} cannot be open for loading!", filename);
+            }
+        }
+
+        if (data != null) {
+            LoadSavedLevel(data);
+        }
+        else {
+            Debug.LogErrorFormat("No data was loaded from {0}", filename);
+        }
+    }
+
+    static readonly object Guard = new object();
 		/// <summary>
 	/// Saves an object tree to a server using POST or STOR
 	/// </summary>
