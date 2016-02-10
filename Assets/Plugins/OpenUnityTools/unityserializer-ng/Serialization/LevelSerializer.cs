@@ -236,12 +236,13 @@ public static class LevelSerializer
             data.WriteToFile(Application.persistentDataPath + "/" + filename);
         }
         else {
-            if (Uri.IsWellFormedUriString(filename, UriKind.RelativeOrAbsolute)) {
-                data.WriteToFile(filename);
-            }
-            else {
-                Debug.LogErrorFormat("ERROR: {0} cannot be open for saving!", filename);
-            }
+#if US_LOGGING
+            Debug.LogFormat("Trying to write file to {0}", filename);
+#endif
+            data.WriteToFile(filename);
+#if US_LOGGING
+            Debug.LogErrorFormat("ERROR: {0} cannot be open for saving!", filename);
+#endif
         }
     }
 
@@ -263,14 +264,15 @@ public static class LevelSerializer
             reader.Close();
         }
         else {
-            if (Uri.IsWellFormedUriString(filename, UriKind.RelativeOrAbsolute)) {
-                reader = File.OpenText(filename);
-                data = reader.ReadToEnd();
-                reader.Close();
-            }
-            else {
-                Debug.LogErrorFormat("ERROR: {0} cannot be open for loading!", filename);
-            }
+#if US_LOGGING
+            Debug.LogFormat("Trying to write file to {0}", filename);
+#endif
+            reader = File.OpenText(filename);
+            data = reader.ReadToEnd();
+            reader.Close();
+#if US_LOGGING
+            Debug.LogErrorFormat("ERROR: {0} cannot be open for loading!", filename);
+#endif
         }
 
         if (data != null) {
@@ -410,7 +412,7 @@ public static class LevelSerializer
 		LoadSavedLevel(www.text);
 	}
 	
-	#endregion
+#endregion
 	
     static LevelSerializer()
     {
@@ -1218,11 +1220,11 @@ public static class LevelSerializer
         return loader;
     }
 
-    #region Nested type: CompareGameObjects
+#region Nested type: CompareGameObjects
 
     private class CompareGameObjects : IEqualityComparer<GameObject>
     {
-        #region IEqualityComparer[GameObject] implementation
+#region IEqualityComparer[GameObject] implementation
 
         public bool Equals(GameObject x, GameObject y)
         {
@@ -1234,14 +1236,14 @@ public static class LevelSerializer
             return obj.GetComponent<PrefabIdentifier>().ClassId.GetHashCode();
         }
 
-        #endregion
+#endregion
 
         public static readonly CompareGameObjects Instance = new CompareGameObjects();
     }
 
-    #endregion
+#endregion
 
-    #region Nested type: LevelData
+#region Nested type: LevelData
 	
 	/// <summary>
 	/// The data stored for a level
@@ -1263,13 +1265,13 @@ public static class LevelSerializer
 		public string rootObject;
     }
 
-    #endregion
+#endregion
 
-    #region Nested type: ProgressHelper
+#region Nested type: ProgressHelper
 
     private class ProgressHelper
     {
-        #region ICodeProgress implementation
+#region ICodeProgress implementation
 
         public void SetProgress(long inSize, long outSize)
         {
@@ -1277,12 +1279,12 @@ public static class LevelSerializer
                           05f);
         }
 
-        #endregion
+#endregion
     }
 
-    #endregion
+#endregion
 
-    #region Nested type: SaveEntry
+#region Nested type: SaveEntry
 
     /// <summary>
     ///   A saved game entry
@@ -1362,9 +1364,9 @@ public static class LevelSerializer
         }
     }
 
-    #endregion
+#endregion
 
-    #region Nested type: SerializationHelper
+#region Nested type: SerializationHelper
 
     /// <summary>
     ///   Checks for the ability to serialize
@@ -1388,9 +1390,9 @@ public static class LevelSerializer
         }
     }
 
-    #endregion
+#endregion
 
-    #region Nested type: SerializationSuspendedException
+#region Nested type: SerializationSuspendedException
 
     public class SerializationSuspendedException : Exception
     {
@@ -1399,9 +1401,9 @@ public static class LevelSerializer
         }
     }
 
-    #endregion
+#endregion
 
-    #region Nested type: StoredData
+#region Nested type: StoredData
 
     public class StoredData
     {
@@ -1411,9 +1413,9 @@ public static class LevelSerializer
         public string Type;
     }
 
-    #endregion
+#endregion
 
-    #region Nested type: StoredItem
+#region Nested type: StoredItem
 
     public class StoredItem
     {
@@ -1438,14 +1440,14 @@ public static class LevelSerializer
         }
     }
 
-    #endregion
+#endregion
 }
 
 
 [ComponentSerializerFor(typeof (Animation))]
 public class SerializeAnimations : IComponentSerializer
 {
-    #region Nested type: StoredState
+#region Nested type: StoredState
 
     public class StoredState
     {
@@ -1454,9 +1456,9 @@ public class SerializeAnimations : IComponentSerializer
 		public SaveGameManager.AssetReference asset;
     }
 
-    #endregion
+#endregion
 
-    #region IComponentSerializer implementation
+#region IComponentSerializer implementation
 
     public byte[] Serialize(Component component)
     {
@@ -1493,7 +1495,7 @@ public class SerializeAnimations : IComponentSerializer
 		});
     }
 
-    #endregion
+#endregion
 }
 
 public static class FieldSerializer
