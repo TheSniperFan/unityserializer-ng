@@ -1,3 +1,15 @@
+#Important annoucements#
+##How to submit a bug-report?##
+Since trying to reproduce bugs all by myself has proven quite time-consuming in the past, here's a new rule you have to follow, if you want me to look into your problems.
+* Create a new project and import the latest version of us-ng
+* Create a **minimal** test-scene that reproduces the problem in a reliable fashion
+* Close Unity, navigate to the project files and delete "Library" directory
+* Compress everything and upload it somewhere
+* Add an entry to the issue-tracker that contains a **detailed** description of what's wrong, a link to the test scene and (if necessary) instructions on how to use it
+
+
+------------
+
 #Introduction#
 ##What is unityserializer-ng?##
 unityserialier-ng is a fork of Mike Talbot's Unity Serializer asset; A complete save solution for games made with Unity 5. 
