@@ -333,6 +333,9 @@ public class UnitySerializerWindow : EditorWindow {
                         if (Has(Selection.activeGameObject, typeof(StoreMesh))) {
                             GUILayout.Label(" + mesh");
                         }
+                        if (Has(Selection.activeGameObject, typeof(StoreAnimator))) {
+                            GUILayout.Label(" + animator");
+                        }
                     }
                     GUILayout.Space(4);
                     GUI.color = Color.white;
@@ -353,10 +356,17 @@ public class UnitySerializerWindow : EditorWindow {
                                         Selection.activeGameObject.AddComponent<StoreMaterials>();
                                     }
                                 }
+                            }
+                            using (new Horizontal()) {
                                 if (Selection.activeGameObject.GetComponent<StoreMesh>() == null && Selection.activeGameObject.GetComponent<StoreInformation>() != null && (Selection.activeGameObject.GetComponent<MeshFilter>() != null || Selection.activeGameObject.GetComponent<SkinnedMeshRenderer>() != null)) {
                                     if (GUILayout.Button("Store Mesh")) {
                                         Undo.RegisterSceneUndo("Change Identifiers");
                                         Selection.activeGameObject.AddComponent<StoreMesh>();
+                                    }
+                                }
+                                if (Selection.activeGameObject.GetComponent<StoreAnimator>() == null && Selection.activeGameObject.GetComponent<StoreInformation>() != null && Selection.activeGameObject.GetComponent<Animator>() != null) {
+                                    if (GUILayout.Button("Store Animator")) {
+                                        Selection.activeGameObject.AddComponent<StoreAnimator>();
                                     }
                                 }
                             }
@@ -375,7 +385,8 @@ public class UnitySerializerWindow : EditorWindow {
                                         DestroyImmediate(c, true);
                                     foreach (var c in Selection.activeGameObject.GetComponents<StoreMesh>())
                                         DestroyImmediate(c, true);
-
+                                    foreach (var c in Selection.activeGameObject.GetComponents<StoreAnimator>())
+                                        DestroyImmediate(c, true);
                                 }
                                 GUI.color = Color.white;
                             }
@@ -413,7 +424,8 @@ public class UnitySerializerWindow : EditorWindow {
                                         DestroyImmediate(c, true);
                                     foreach (var c in Selection.activeGameObject.GetComponents<StoreMesh>())
                                         DestroyImmediate(c, true);
-
+                                    foreach (var c in Selection.activeGameObject.GetComponents<StoreAnimator>())
+                                        DestroyImmediate(c, true);
                                 }
                                 GUI.color = Color.white;
                             }
