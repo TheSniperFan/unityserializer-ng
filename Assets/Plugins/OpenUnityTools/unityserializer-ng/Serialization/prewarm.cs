@@ -8515,6 +8515,8 @@ public static partial class PreWarm {
       "UnityEngine.UI.Toggle, UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
       "UnityEngine.UI.InputField, UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
       "UnityEngine.Canvas, UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "UnityEngine.Animator, UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "UnityEngine.AnimatorControllerParameter, UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null",
       "END OF LIST"
      };
 }
