@@ -22,7 +22,8 @@ public class StoreAnimator : MonoBehaviour {
         public int index;
         public int currentHash;
         public int nextHash;
-        public float normalizedTime;
+        public float normalizedTimeCurrent;
+        public float normalizedTimeNext;
         public float weight;
     }
     [SerializeThis]
@@ -50,7 +51,8 @@ public class StoreAnimator : MonoBehaviour {
                 index = i,
                 currentHash = animator.GetCurrentAnimatorStateInfo(i).shortNameHash,
                 nextHash = animator.GetNextAnimatorStateInfo(i).shortNameHash,
-                normalizedTime = animator.GetCurrentAnimatorStateInfo(i).normalizedTime,
+                normalizedTimeCurrent = animator.GetCurrentAnimatorStateInfo(i).normalizedTime,
+                normalizedTimeNext = animator.GetNextAnimatorStateInfo(i).normalizedTime,
                 weight = animator.GetLayerWeight(i)
             };
         }
@@ -71,7 +73,12 @@ public class StoreAnimator : MonoBehaviour {
 
         // Restore the states of each layer
         foreach (LayerInfo layer in layerData) {
-            animator.Play(loadingMode == LoadingMode.REVERT ? layer.currentHash : layer.nextHash, layer.index, layer.normalizedTime);
+            if (loadingMode == LoadingMode.REVERT) {
+                animator.Play(layer.currentHash, layer.index, layer.normalizedTimeCurrent);
+            }
+            else {
+                animator.Play(layer.nextHash, layer.index, layer.normalizedTimeNext);
+            }
             animator.SetLayerWeight(layer.index, layer.weight);
         }
 
