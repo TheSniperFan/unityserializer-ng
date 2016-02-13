@@ -7,6 +7,8 @@ Since trying to reproduce bugs all by myself has proven quite time-consuming in 
 * Compress everything and upload it somewhere
 * Add an entry to the issue-tracker that contains a **detailed** description of what's wrong, a link to the test scene and (if necessary) instructions on how to use it
 
+##Limited Animator (mecanim) support!##
+unityserializer-ng now supports saving and restoring parts of your Animators. Instructions can be found [here](MECANIM.md).
 
 ------------
 
@@ -58,6 +60,7 @@ Almost 9000 less lines of code to worry about.
   * AudioFilters
   * Sprites
   * New Unity GUI components (RectTransform, etc.)
+  * Limited support for mecanim Animators
 
 #Installation#
 At the moment this asset is not available in the Unity Asset Store, due to Unity 5 still being beta and therefore subject to potentially big changes. The plan is to release it in the asset store, once Unity 5 stable is released.
