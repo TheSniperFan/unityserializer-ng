@@ -271,7 +271,7 @@ public class LevelLoader : MonoBehaviour
             var item = UniqueIdentifier.GetByName(go.Name);
             if (item != null && parent != null)
             {
-                item.transform.parent = parent.transform;
+                item.SetParent(parent);
             }
         }
 		
