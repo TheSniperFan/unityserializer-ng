@@ -926,7 +926,11 @@ public static class LevelSerializer
 		}
         return SerializeLevel(false, rootOfTree.GetComponent<UniqueIdentifier>().Id);
     }
-	
+
+    /// <summary>
+    /// Occurs before any loading is done.
+    /// </summary>
+    public static event Action BeginLoad = delegate { };
 	
 
     /// <summary>
@@ -1163,6 +1167,10 @@ public static class LevelSerializer
 	
 	public static void LoadNow(object data, bool dontDeleteExistingItems, bool showLoadingGUI, Action<LevelLoader> complete)
 	{
+        if(BeginLoad != null) {
+            BeginLoad();
+        }
+
 		byte[] levelData = null;
 		if(data is byte[])
 		{
@@ -1209,6 +1217,10 @@ public static class LevelSerializer
     /// <param name='data'> The data describing the level to load </param>
     public static LevelLoader LoadSavedLevel(string data)
     {
+        if(BeginLoad != null) {
+            BeginLoad();
+        }
+
         LevelData ld;
         IsDeserializing = true;
 	    if (data.StartsWith("NOCOMPRESSION"))
