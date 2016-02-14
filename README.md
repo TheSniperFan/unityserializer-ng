@@ -1,3 +1,7 @@
+#YOU'RE WRONG HERE! (probably)#
+The unstable branch is the branch I use for my current project(s). Backwards-compatibility breaking changes will be made without notice!
+While this branch will be more up-to-date, you'll want to use the [mater](https://github.com/TheSniperFan/unityserializer-ng/tree/master) branch instead. If you really, really want to use this branch, create a fork for your own project.
+
 #Important annoucements#
 ##How to submit a bug-report?##
 Since trying to reproduce bugs all by myself has proven quite time-consuming in the past, here's a new rule you have to follow, if you want me to look into your problems.
