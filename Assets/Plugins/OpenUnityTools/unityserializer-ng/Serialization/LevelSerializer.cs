@@ -589,6 +589,17 @@ public static class LevelSerializer
 		FilePrefs.Save();
     }
 
+    public static void ClearCheckpoint() {
+        ClearCheckpoint(true);
+    }
+
+    public static void ClearCheckpoint(bool store) {
+        FilePrefs.DeleteKey(PlayerName + "__RESUME__");
+        if (store) {
+            FilePrefs.Save();
+        }
+    }
+
     /// <summary>
     ///   Suspends the serialization. Must resume as many times as you suspend
     /// </summary>

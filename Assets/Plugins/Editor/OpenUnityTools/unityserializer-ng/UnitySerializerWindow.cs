@@ -502,6 +502,7 @@ public class UnitySerializerWindow : EditorWindow {
                     if (EditorUtility.DisplayDialog("Delete Saved Games",
                         "Are you sure you want to delete all of the saved games?", "Yes", "No")) {
                         LevelSerializer.SavedGames.Clear();
+                        LevelSerializer.ClearCheckpoint(true);
                         LevelSerializer.SaveDataToFilePrefs();
                     }
                 }
@@ -660,6 +661,7 @@ public class UnitySerializerWindow : EditorWindow {
                     if (EditorUtility.DisplayDialog("Delete Saved Games",
                         "Are you sure you want to delete all of the saved games?", "Yes", "No")) {
                         LevelSerializer.SavedGames.Clear();
+                        LevelSerializer.ClearCheckpoint(true);
                         LevelSerializer.SaveDataToFilePrefs();
                     }
                 }
