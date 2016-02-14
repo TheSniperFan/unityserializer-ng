@@ -174,7 +174,6 @@ public partial class StoreMaterials : MonoBehaviour {
             switch (v.property.type) {
                 case MaterialProperty.PropertyType.Color:
                     m.SetColor(v.property.name, (Color)v.value[0]);
-                    Debug.Log(v.property.name);
                     break;
                 case MaterialProperty.PropertyType.Float:
                     m.SetFloat(v.property.name, (float)v.value[0]);
