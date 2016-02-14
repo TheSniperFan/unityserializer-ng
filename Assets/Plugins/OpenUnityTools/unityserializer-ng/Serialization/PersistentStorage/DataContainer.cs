@@ -12,7 +12,9 @@ namespace UnitySerializerNG.FilePreferences {
 
     [Serializable]
     public class DataContainer<T> {
+#pragma warning disable 0414
         private static GameObject QuitObject;
+#pragma warning restore 0414
 
         private static string root = Path.GetFullPath(Application.persistentDataPath) + Path.DirectorySeparatorChar + "persistentData";
         private string profileName;
