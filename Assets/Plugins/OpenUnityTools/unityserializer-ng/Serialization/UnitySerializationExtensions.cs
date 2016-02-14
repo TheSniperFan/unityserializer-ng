@@ -702,7 +702,7 @@ public class SerializeCamera : IComponentSerializer {
 public class SerializeRigidBody : IComponentSerializer {
     public class RigidBodyInfo {
         public bool isKinematic;
-        public bool useGravity, freezeRotation, detectCollisions, useConeFriction;
+        public bool useGravity, freezeRotation, detectCollisions;
         public Vector3 velocity, position, angularVelocity, centerOfMass, inertiaTensor;
         public Quaternion rotation, inertiaTensorRotation;
         public float drag, angularDrag, mass, sleepThreshold, maxAngularVelocity;
@@ -717,7 +717,6 @@ public class SerializeRigidBody : IComponentSerializer {
             useGravity = source.useGravity;
             freezeRotation = source.freezeRotation;
             detectCollisions = source.detectCollisions;
-            useConeFriction = source.useConeFriction;
             velocity = source.velocity;
             position = source.position;
             rotation = source.rotation;
@@ -741,7 +740,6 @@ public class SerializeRigidBody : IComponentSerializer {
             body.freezeRotation = freezeRotation;
             body.useGravity = useGravity;
             body.detectCollisions = detectCollisions;
-            body.useConeFriction = useConeFriction;
             if (centerOfMass != Vector3.zero)
                 body.centerOfMass = centerOfMass;
             body.drag = drag;
