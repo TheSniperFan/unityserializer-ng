@@ -1,3 +1,28 @@
+#DEAD REPOSITORY (read below)
+#DEAD REPOSITORY (read below)
+#DEAD REPOSITORY (read below)
+#DEAD REPOSITORY (read below)
+#DEAD REPOSITORY (read below)
+##Now that I have your attention:
+
+No, the project is **not dead**; It was merely moved to another website. This means that this repository here on GitHub **WILL NOT** be updated anymore. However, the issue tracker **will** stay open, so feel free to use it support request/questions/feedback. If you want to contribute, head over to its new home, where the actual development will be done.
+
+##Where to get the newest version in the future?
+[Right here](https://gitgud.io/TheSniperFan/unityserializer-ng).
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+
 #Important annoucements#
 ##How to submit a bug-report?##
 Since trying to reproduce bugs all by myself has proven quite time-consuming in the past, here's a new rule you have to follow, if you want me to look into your problems.
