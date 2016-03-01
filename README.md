@@ -1,6 +1,30 @@
+#DEAD REPOSITORY (read below)
+#DEAD REPOSITORY (read below)
+#DEAD REPOSITORY (read below)
+#DEAD REPOSITORY (read below)
+#DEAD REPOSITORY (read below)
+##Now that I have your attention:
+
+No, the project is **not dead**; It was merely moved to another website. This means that this repository here on GitHub **WILL NOT** be updated anymore. However, the issue tracker **will** stay open, so feel free to use it support request/questions/feedback. If you want to contribute, head over to its new home, where the actual development will be done.
+
+##Where to get the newest version in the future?
+[Right here](https://gitgud.io/TheSniperFan/unityserializer-ng).
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
 #YOU'RE WRONG HERE! (probably)#
 The unstable branch is the branch I use for my current project(s). Backwards-compatibility breaking changes will be made without notice!
-While this branch will be more up-to-date, you'll want to use the [mater](https://github.com/TheSniperFan/unityserializer-ng/tree/master) branch instead. If you really, really want to use this branch, create a fork for your own project.
+While this branch will be more up-to-date, you'll want to use the [master](https://github.com/TheSniperFan/unityserializer-ng/tree/master) branch instead. If you really, really want to use this branch, create a fork for your own project.
 
 #Important annoucements#
 ##How to submit a bug-report?##
